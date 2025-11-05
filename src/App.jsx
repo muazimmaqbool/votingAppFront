@@ -1,14 +1,34 @@
-import Background from "./Components/Background"
-import Home from "./Components/Home"
-
+import Home from "./Components/Home";
+import UserPage from "./Components/UserPage";
+import AdminPage from "./Components/AdminPage";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./Context/ProtectedRoute";
 function App() {
-
   return (
     <div className="relative w-full h-screen bg-zinc-800">
-      <Background/>
-      <Home/>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/user"
+            element={
+              <ProtectedRoute role="user">
+                <UserPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute role="admin">
+                <AdminPage />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
