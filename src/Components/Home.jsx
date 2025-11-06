@@ -26,6 +26,40 @@ export default function Home() {
           Voter Login 
         </div>
 
+         <label className="block mb-2 font-medium">Aadhar Card Number</label>
+        <input
+          type="text"
+          maxLength="12"
+          // value={aadhar}
+          // onChange={(e) => setAadhar(e.target.value)}
+          className="w-full p-2 border rounded mb-4 focus:ring focus:ring-blue-300"
+          placeholder="Enter Aadhar Number"
+        />
+
+         <label className="block mb-2 font-medium">Password</label>
+        <input
+          type="password"
+          // value={password}
+          // onChange={(e) => setPassword(e.target.value)}
+          className="w-full p-2 border rounded mb-4 focus:ring focus:ring-blue-300"
+          placeholder="Enter Password"
+        />
+
+        {/* Login Button */}
+        <button
+          onClick={handleLogin}
+          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+        >
+          Login
+        </button>
+
+        <button
+          onClick={() => navigate("/register")}
+          className="w-full mt-3 bg-gray-200 text-gray-900 py-2 rounded hover:bg-gray-300 transition"
+        >
+          Register New Voter
+        </button>
+
       </div>
     </div>
   );

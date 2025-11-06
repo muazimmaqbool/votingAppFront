@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./Context/ProtectedRoute";
 function App() {
   return (
-    <div className="relative w-full h-screen bg-zinc-800">
+    <div className="relative flex items-center justify-center w-full h-screen bg-zinc-800">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
