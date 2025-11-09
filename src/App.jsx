@@ -1,9 +1,9 @@
 import Home from "./Components/Home";
 import UserPage from "./Components/UserPage";
-import AdminPage from "./Components/AdminPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./Context/ProtectedRoute";
 import RegisterUser from "./Components/RegisterUser";
+import AdminDashboard from "./Components/Admin/AdminDashboard";
 function App() {
   return (
     <div className="relative flex items-center justify-center w-full h-screen bg-zinc-800">
@@ -22,7 +22,7 @@ function App() {
             path="/admin"
             element={
               <ProtectedRoute role="admin">
-                <AdminPage />
+                <AdminDashboard />
               </ProtectedRoute>
             }
           />
