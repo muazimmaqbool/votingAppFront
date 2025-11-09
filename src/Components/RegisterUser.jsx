@@ -33,91 +33,91 @@ const RegisterUser = () => {
     <div className='flex justify-center items-center min-h-screen'>
        <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-lg rounded-lg p-8 w-full overflow-y-auto max-h-[90vh]"
+        className="bg-white shadow-lg rounded-lg px-10 py-6 w-full overflow-y-auto max-h-[90vh]"
       >
-        <h2 className="text-2xl font-bold text-center mb-6">Voter Registration</h2>
+        <h2 className="text-2xl font-bold text-center mb-3 pb-2 border-b-2 border-gray-200">Voter Registration</h2>
 
-        <label className="block mb-2 font-medium">Full Name *</label>
+        <label className="block mb-1 font-medium">Full Name *</label>
         <input
           type="text"
           name="name"
           value={formData.name}
           onChange={handleChange}
-          className="w-full p-2 border rounded mb-4 focus:ring focus:ring-blue-300"
+          className="w-full p-1 border rounded mb-3 focus:ring focus:ring-blue-300"
           required
           placeholder="Enter your full name"
         />
 
 
-        <label className="block mb-2 font-medium">Age *</label>
+        <label className="block mb-1 font-medium">Age *</label>
         <input
           type="number"
           name="age"
           value={formData.age}
           onChange={handleChange}
-          className="w-full p-2 border rounded mb-4 focus:ring focus:ring-blue-300"
+          className="w-full p-1 border rounded mb-3 focus:ring focus:ring-blue-300"
           required
           placeholder="Enter your age"
         />
 
 
-        <label className="block mb-2 font-medium">Email</label>
+        <label className="block mb-1 font-medium">Email</label>
         <input
           type="email"
           name="email"
           value={formData.email}
           onChange={handleChange}
-          className="w-full p-2 border rounded mb-4 focus:ring focus:ring-blue-300"
+          className="w-full p-1 border rounded mb-3 focus:ring focus:ring-blue-300"
           placeholder="Enter your email"
         />
 
-        <label className="block mb-2 font-medium">Phone Number</label>
+        <label className="block mb-1 font-medium">Phone Number</label>
         <input
           type="text"
           name="phone"
           value={formData.phone}
           onChange={handleChange}
-          className="w-full p-2 border rounded mb-4 focus:ring focus:ring-blue-300"
+          className="w-full p-1 border rounded mb-3 focus:ring focus:ring-blue-300"
           placeholder="Enter your phone number"
         />
 
 
-        <label className="block mb-2 font-medium">Address *</label>
+        <label className="block mb-1 font-medium">Address *</label>
         <textarea
           name="address"
           value={formData.address}
           onChange={handleChange}
-          className="w-full p-2 border rounded mb-4 focus:ring focus:ring-blue-300"
+          className="w-full p-1 border rounded mb-3 focus:ring focus:ring-blue-300"
           required
           placeholder="Enter your address"
         />
 
-        <label className="block mb-2 font-medium">Aadhar Card Number *</label>
+        <label className="block mb-1 font-medium">Aadhar Card Number *</label>
         <input
           type="number"
           name="aadharCardNumber"
           value={formData.aadharCardNumber}
           onChange={handleChange}
-          className="w-full p-2 border rounded mb-4 focus:ring focus:ring-blue-300"
+          className="w-full p-1 border rounded mb-3 focus:ring focus:ring-blue-300"
           required
           placeholder="Enter Aadhar Card Number"
         />
 
 
-        <label className="block mb-2 font-medium">Password *</label>
+        <label className="block mb-1 font-medium">Password *</label>
         <input
           type="password"
           name="password"
           value={formData.password}
           onChange={handleChange}
-          className="w-full p-2 border rounded mb-6 focus:ring focus:ring-blue-300"
+          className="w-full p-1 border rounded mb-4 focus:ring focus:ring-blue-300"
           required
           placeholder="Create a password"
         />
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+          className="w-full bg-blue-600 text-white py-2 rounded cursor-pointer hover:bg-blue-700 transition"
         >
           Register
         </button>
@@ -125,7 +125,7 @@ const RegisterUser = () => {
         <button
           type="button"
           onClick={() => navigate("/")}
-          className="w-full mt-3 bg-gray-200 text-gray-900 py-2 rounded hover:bg-gray-300 transition"
+          className="w-full mt-3 bg-gray-200 text-gray-900 py-2 cursor-pointer rounded hover:bg-gray-300 transition"
         >
           Back to Login
         </button>

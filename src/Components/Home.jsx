@@ -51,14 +51,14 @@ export default function Home() {
         {/* Login Button */}
         <button
           onClick={handleLogin}
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition cursor-pointer"
         >
           Login
         </button>
 
         <button
           onClick={() => navigate("/register")}
-          className="w-full mt-3 bg-gray-200 text-gray-900 py-2 rounded hover:bg-gray-300 transition"
+          className="w-full mt-3 bg-gray-200 text-gray-900 py-2 rounded hover:bg-gray-300 transition cursor-pointer"
         >
           Register New Voter
         </button>
