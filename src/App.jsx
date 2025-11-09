@@ -3,6 +3,7 @@ import UserPage from "./Components/UserPage";
 import AdminPage from "./Components/AdminPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./Context/ProtectedRoute";
+import RegisterUser from "./Components/RegisterUser";
 function App() {
   return (
     <div className="relative flex items-center justify-center w-full h-screen bg-zinc-800">
@@ -25,6 +26,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+           <Route path="/register" element={<RegisterUser />} />
         </Routes>
       </BrowserRouter>
     </div>

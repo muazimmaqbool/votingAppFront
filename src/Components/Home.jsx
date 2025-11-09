@@ -1,10 +1,13 @@
 
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
+import { useState } from "react";
 
 export default function Home() {
   const { login } = useAuth();
   const navigate = useNavigate(); //used to move to another page
+  const [aadhar, setAadhar] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
     const response = {
@@ -30,8 +33,8 @@ export default function Home() {
         <input
           type="text"
           maxLength="12"
-          // value={aadhar}
-          // onChange={(e) => setAadhar(e.target.value)}
+          value={aadhar}
+          onChange={(e) => setAadhar(e.target.value)}
           className="w-full p-2 border rounded mb-4 focus:ring focus:ring-blue-300"
           placeholder="Enter Aadhar Number"
         />
@@ -39,8 +42,8 @@ export default function Home() {
          <label className="block mb-2 font-medium">Password</label>
         <input
           type="password"
-          // value={password}
-          // onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           className="w-full p-2 border rounded mb-4 focus:ring focus:ring-blue-300"
           placeholder="Enter Password"
         />
