@@ -30,7 +30,7 @@ function App() {
               </ProtectedRoute>
             }
           >
-            <Route path="candidates" element={<CandidateList />} />
+            <Route path="candidates" element={<CandidateList />}/>
             <Route path="votes" element={<CandidateList />} />
             <Route path="profile" element={<Profile />} />
             <Route path="change-password" element={<ChangePassword />} />
