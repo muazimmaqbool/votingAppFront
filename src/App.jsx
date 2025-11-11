@@ -1,6 +1,6 @@
 import Home from "./Components/Home";
 import UserPage from "./Components/UserPage";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./Context/ProtectedRoute";
 import RegisterUser from "./Components/RegisterUser";
 import AdminDashboard from "./Components/Admin/AdminDashboard";
@@ -30,6 +30,10 @@ function App() {
               </ProtectedRoute>
             }
           >
+            <Route index element={<Navigate to="candidates" replace />} />
+            {/* <Route index /> means it’s the default child route for a parent route, this acts like a default page under /admin route */}
+            {/* the replace prevents adding extra history entries (so back button won’t go back to the redirect) */}
+            {/* <Navigate> is a special React Router component that automatically redirects the user to another route. */}
             <Route path="candidates" element={<CandidateList />}/>
             <Route path="votes" element={<CandidateList />} />
             <Route path="profile" element={<Profile />} />
