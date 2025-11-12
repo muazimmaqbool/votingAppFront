@@ -35,7 +35,6 @@ function App() {
             {/* the replace prevents adding extra history entries (so back button won’t go back to the redirect) */}
             {/* <Navigate> is a special React Router component that automatically redirects the user to another route. */}
             <Route path="candidates" element={<CandidateList />}/>
-            <Route path="votes" element={<CandidateList />} />
             <Route path="profile" element={<Profile />} />
             <Route path="change-password" element={<ChangePassword />} />
           </Route>

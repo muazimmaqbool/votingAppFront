@@ -55,17 +55,7 @@ const AdminDashboard = () => {
               }`
             }
           >
-            Manage Candidates
-          </NavLink>
-          <NavLink
-            to="votes"
-            className={({ isActive }) =>
-              `block px-3 py-2 rounded hover:bg-blue-900 ${
-                isActive ? "bg-blue-900" : ""
-              }`
-            }
-          >
-            Vote Count
+            Candidates
           </NavLink>
           <NavLink
             to="profile"
