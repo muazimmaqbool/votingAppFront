@@ -35,8 +35,13 @@ const AdminDashboard = () => {
         -> md:translate-x-0 → Always visible on desktop
         -> transform transition-transform duration-300
         */}
-        <div className="p-6 text-2xl font-bold border-b border-white-300 flex justify-between items-center">
-          Admin Panel
+        <div className="px-6 py-4 border-b border-white-300 flex justify-between items-center">
+         <div className="flex flex-col">
+          <p className="text-2xl font-bold">Admin</p>
+          <p className="text-sm font-light hidden md:block">
+            Welcome, {user?.name}
+          </p>
+         </div>
           <button
             onClick={toggleSidebar}
             className="md:hidden text-white hover:text-gray-200"
