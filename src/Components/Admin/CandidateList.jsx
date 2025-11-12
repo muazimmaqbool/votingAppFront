@@ -11,6 +11,7 @@ const CandidateList = () => {
     party: "",
     votes: "",
   });
+  const [editID, seteditID] = useState(null);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewCandidate((prev) => ({ ...prev, [name]: value }));
@@ -23,21 +24,52 @@ const CandidateList = () => {
       alert("Please fill in all required fields!");
       return;
     }
+    if (editID) {
+      //updating existing candidate
+      setCandidates((prev) =>
+        prev.map((c) =>
+          c.id === editID
+            ? {
+                ...c,
+                name: newCandidate.name,
+                party: newCandidate?.party,
+              }
+            : c
+        )
+      );
+    } else {
+      //adding new candidate
+      const newEntry = {
+        id: candidates.length + 1,
+        name: newCandidate.name,
+        party: newCandidate.party,
+        votes: Number(newCandidate.votes) || 0,
+      };
 
-    const newEntry = {
-      id: candidates.length + 1,
-      name: newCandidate.name,
-      party: newCandidate.party,
-      votes: Number(newCandidate.votes) || 0,
-    };
+      setCandidates((prev) => [...prev, newEntry]);
+    }
 
-    setCandidates((prev) => [...prev, newEntry]);
     setNewCandidate({ name: "", party: "", votes: "" });
+    seteditID(null);
     setIsModalOpen(false);
   };
 
   const handleDelete = (id) => {
     setCandidates((prev) => prev.filter((c) => c.id !== id));
+  };
+
+  const handleEdit = (candidate) => {
+    seteditID(candidate.id);
+    setNewCandidate({
+      name: candidate.name,
+      party: candidate.party,
+    });
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    seteditID(null);
+    setNewCandidate({ name: "", party: "", votes: "" });
   };
 
   return (
@@ -53,35 +85,38 @@ const CandidateList = () => {
       {/* for mobile screens it will be hidden and visible in large screens only */}
       <div className="overflow-x-auto hidden md:block">
         <table className="w-full border">
-        <thead className="bg-gray-200">
-          <tr>
-            <th className="p-2 border">Name</th>
-            <th className="p-2 border">Party</th>
-            <th className="p-2 border">Votes</th>
-            <th className="p-2 border">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {candidates.map((c) => (
-            <tr key={c.id} className="text-center hover:bg-gray-50">
-              <td className="p-2 border">{c.name}</td>
-              <td className="p-2 border">{c.party}</td>
-              <td className="p-2 border">{c.votes}</td>
-              <td className="p-2 border space-x-2">
-                <button className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600">
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDelete(c.id)}
-                  className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700"
-                >
-                  Delete
-                </button>
-              </td>
+          <thead className="bg-gray-200">
+            <tr>
+              <th className="p-2 border">Name</th>
+              <th className="p-2 border">Party</th>
+              <th className="p-2 border">Votes</th>
+              <th className="p-2 border">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {candidates.map((c) => (
+              <tr key={c.id} className="text-center hover:bg-gray-50">
+                <td className="p-2 border">{c.name}</td>
+                <td className="p-2 border">{c.party}</td>
+                <td className="p-2 border">{c.votes}</td>
+                <td className="p-2 border space-x-2">
+                  <button
+                    className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
+                    onClick={() => handleEdit(c)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(c.id)}
+                    className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       {/* mobile : visible in small screen and hidden in large screens */}
@@ -102,7 +137,10 @@ const CandidateList = () => {
             </p>
 
             <div className="mt-3 flex gap-2">
-              <button className="flex-1 bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">
+              <button
+                onClick={() => handleEdit(c)}
+                className="flex-1 bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
+              >
                 Edit
               </button>
               <button
@@ -122,7 +160,7 @@ const CandidateList = () => {
           {/* the inset-0 utility class sets the top, right, bottom, and left properties of an element to 0 */}
           <div className="bg-white rounded-lg shadow-lg w-11/12 max-w-md p-6 relative">
             <h3 className="text-xl font-semibold mb-4 text-center text-blue-800">
-              Add New Candidate
+              {editID ? "Edit Candidate" : "Add New Candidate"}
             </h3>
 
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -151,7 +189,7 @@ const CandidateList = () => {
               <div className="flex justify-end gap-2 mt-4">
                 <button
                   type="button"
-                  onClick={() => setIsModalOpen(false)}
+                  onClick={closeModal}
                   className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
                 >
                   Cancel
@@ -160,13 +198,13 @@ const CandidateList = () => {
                   type="submit"
                   className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
                 >
-                  Add
+                  {editID ? "Update" : "Add"}
                 </button>
               </div>
             </form>
 
             <button
-              onClick={() => setIsModalOpen(false)}
+              onClick={closeModal}
               className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
             >
               ✕
