@@ -18,10 +18,9 @@ export default function Profile() {
     const { name, value } = e.target;
     setEditData((prev) => ({ ...prev, [name]: value }));
   };
-
+  console.log("editData:",editData)
   const handleSave = (e) => {
     e.preventDefault();
-   // setUser(editData); // update user in context
     setIsEditing(false);
   };
 
@@ -46,15 +45,14 @@ export default function Profile() {
         </button>
       </div>
 
-      {/* Edit Modal */}
       {isEditing && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-20">
-          <div className="bg-white rounded-lg shadow-lg w-11/12 max-w-lg p-6 relative">
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-20 ">
+          <div className="bg-white rounded-lg shadow-lg w-11/12 max-w-lg p-6 relative h-[90%] overflow-auto">
             <h3 className="text-xl font-semibold mb-4 text-center text-blue-800">
               Edit Profile
             </h3>
 
-            <form onSubmit={handleSave} className="space-y-4">
+            <form onSubmit={handleSave} className="space-y-3">
               <div>
                 <label className="block mb-1 font-medium">Name</label>
                 <input
@@ -90,7 +88,7 @@ export default function Profile() {
               <div>
                 <label className="block mb-1 font-medium">Phone</label>
                 <input
-                  type="tel"
+                  type="number"
                   name="phone"
                   value={editData.phone}
                   onChange={handleChange}
@@ -111,6 +109,7 @@ export default function Profile() {
               <div>
                 <label className="block mb-1 font-medium">Aadhaar Card</label>
                 <input
+                type="number"
                   name="aadhar"
                   value={editData.aadhar}
                   onChange={handleChange}
@@ -133,13 +132,13 @@ export default function Profile() {
                 <button
                   type="button"
                   onClick={() => setIsEditing(false)}
-                  className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
+                  className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer"
                 >
                   Save Changes
                 </button>
@@ -148,7 +147,7 @@ export default function Profile() {
 
             <button
               onClick={() => setIsEditing(false)}
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 cursor-pointer"
             >
               ✕
             </button>
