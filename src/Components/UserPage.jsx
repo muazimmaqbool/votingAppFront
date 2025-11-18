@@ -48,7 +48,7 @@ const UserPage = () => {
     
             <nav className="flex-1 p-4 space-y-2">
               <NavLink
-                to="candidates"
+                to="votingCandidate"
                 className={({ isActive }) =>
                   `block px-3 py-2 rounded hover:bg-blue-900 ${
                     isActive ? "bg-blue-900" : ""

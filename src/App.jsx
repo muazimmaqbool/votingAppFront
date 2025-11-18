@@ -8,6 +8,7 @@ import CandidateList from "./Components/Admin/CandidateList";
 import Profile from "./Components/Admin/Profile";
 import ChangePassword from "./Components/Admin/ChangePassword";
 import AllVoters from "./Components/Admin/AllVoters";
+import CandidatesToVote from "./Components/CandidatesToVote";
 function App() {
   return (
     <div className="relative flex items-center justify-center w-full h-screen bg-zinc-800">
@@ -22,7 +23,12 @@ function App() {
                 <UserPage />
               </ProtectedRoute>
             }
-          />
+          >
+            <Route index element={<Navigate to="votingCandidate" replace />} />
+            <Route path="votingCandidate" element={<CandidatesToVote/>}/>
+            <Route path="profile" element={<Profile />} />
+            <Route path="change-password" element={<ChangePassword />} />
+          </Route>
           <Route
             path="/admin"
             element={
@@ -35,8 +41,8 @@ function App() {
             {/* <Route index /> means it’s the default child route for a parent route, this acts like a default page under /admin route */}
             {/* the replace prevents adding extra history entries (so back button won’t go back to the redirect) */}
             {/* <Navigate> is a special React Router component that automatically redirects the user to another route. */}
-            <Route path="candidates" element={<CandidateList />}/>
-            <Route path="voters" element={<AllVoters/>}/>
+            <Route path="candidates" element={<CandidateList />} />
+            <Route path="voters" element={<AllVoters />} />
             <Route path="profile" element={<Profile />} />
             <Route path="change-password" element={<ChangePassword />} />
           </Route>
