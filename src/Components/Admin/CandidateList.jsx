@@ -6,6 +6,8 @@ const CandidateList = () => {
     { id: 2, name: "Jane Smith", party: "XYZ", votes: 90 },
   ]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showConfirm, setshowConfirm] = useState(false);
+  const [candidateToDelete, setcandidateToDelete] = useState();
   const [newCandidate, setNewCandidate] = useState({
     name: "",
     party: "",
@@ -56,6 +58,7 @@ const CandidateList = () => {
 
   const handleDelete = (id) => {
     setCandidates((prev) => prev.filter((c) => c.id !== id));
+    setshowConfirm(false)
   };
 
   const handleEdit = (candidate) => {
@@ -107,7 +110,10 @@ const CandidateList = () => {
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDelete(c.id)}
+                    onClick={() => {
+                      setshowConfirm(true);
+                      setcandidateToDelete(c);
+                    }}
                     className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700"
                   >
                     Delete
@@ -144,7 +150,10 @@ const CandidateList = () => {
                 Edit
               </button>
               <button
-                onClick={() => handleDelete(c.id)}
+                onClick={() => {
+                  setshowConfirm(true);
+                  setcandidateToDelete(c);
+                }}
                 className="flex-1 bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
               >
                 Delete
@@ -209,6 +218,35 @@ const CandidateList = () => {
             >
               ✕
             </button>
+          </div>
+        </div>
+      )}
+
+      {showConfirm && (
+        <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-20">
+          <div className="bg-white p-6 rounded shadow-lg w-80 text-center">
+            <h3 className="text-lg font-semibold mb-3">Confirm Your Vote</h3>
+            <p className="mb-4">
+              Are you sure you want to delete{" "}<br/>
+              <span className="font-bold text-blue-700">
+                {candidateToDelete?.name}
+              </span>
+            </p>
+
+            <div className="flex justify-center gap-3">
+              <button
+                onClick={() => setshowConfirm(false)}
+                className="px-4 py-2 bg-gray-400 text-white rounded"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => handleDelete(candidateToDelete?.id)}
+                className="px-4 py-2 bg-green-600 text-white rounded"
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
       )}

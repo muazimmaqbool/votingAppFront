@@ -12,7 +12,7 @@ export default function Home() {
   const handleLogin = async () => {
     const response = {
       name: "Muazim",
-      role: "user", 
+      role: "admin", 
     };
 
     login(response);
