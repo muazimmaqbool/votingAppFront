@@ -1,18 +1,23 @@
 import React, { useState } from 'react'
 
 const CandidatesToVote = () => {
-  const [candidates, setCandidates] = useState([
-    { id: 1, name: "John Doe", party: "ABC" },
-    { id: 2, name: "Jane Smith", party: "XYZ" },
-    { id: 3, name: "Bilal Khan", party: "JKP" },
-  ]);
+const candidates = [
+  { id: 1, name: "Aadil Sheikh", party: "People's Reform Party" },
+  { id: 2, name: "Sana Mir", party: "National Unity Front" },
+  { id: 3, name: "Umar Rafiq", party: "Progressive Youth Alliance" },
+  { id: 4, name: "Mehreen Fatima", party: "Democratic Vision Party" },
+  { id: 5, name: "Rayyan Bashir", party: "Green Valley Movement" },
+  { id: 6, name: "Hamza Lone", party: "Justice & Welfare League" },
+  { id: 7, name: "Iqra Shafi", party: "Peace & Development Council" },
+  { id: 8, name: "Zaid Ahmad", party: "Future Leaders Party" },
+];
 
-  const [selectedCandidate, setSelectedCandidate] = useState(null); // who voter selected
-  const [showConfirm, setShowConfirm] = useState(false); // modal
-  const [votedCandidateId, setVotedCandidateId] = useState(null); // final vote
+
+  const [selectedCandidate, setSelectedCandidate] = useState(null); 
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [votedCandidateId, setVotedCandidateId] = useState(null); 
 
   const handleVoteClick = (candidate) => {
-    // If already voted, do nothing
     if (votedCandidateId) return;
     setSelectedCandidate(candidate);
     setShowConfirm(true);
@@ -25,14 +30,18 @@ const CandidatesToVote = () => {
 
   return (
     <div>
-      {/* Warning */}
+
       <div className="bg-yellow-200 text-yellow-800 border border-yellow-500 p-3 rounded mb-4">
         ⚠ Once you vote, you cannot undo or change your vote.
       </div>
 
       <h2 className="text-2xl font-bold mb-4">Candidates</h2>
 
-      {/* Candidate List */}
+    {/*
+    -> md:grid-cols-2 : On medium screens → 2 columns
+    -> lg:grid-cols-3 : On large screens → 3 columns
+    -> Responsively displays 1, 2, or 3 candidates per row i.e one column on smaller
+    */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         {candidates.map((c) => (
           <div
@@ -59,9 +68,8 @@ const CandidatesToVote = () => {
         ))}
       </div>
 
-      {/* Confirmation Modal */}
       {showConfirm && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
+        <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-20">
           <div className="bg-white p-6 rounded shadow-lg w-80 text-center">
             <h3 className="text-lg font-semibold mb-3">Confirm Your Vote</h3>
             <p className="mb-4">
