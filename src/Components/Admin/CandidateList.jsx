@@ -88,14 +88,14 @@ const CandidateList = () => {
       {/* for mobile screens it will be hidden and visible in large screens only */}
       <div className="overflow-x-auto hidden md:block">
         <table className="w-full border">
-          <thead className="bg-gray-200">
+          {candidates && candidates?.length>0 && <thead className="bg-gray-200">
             <tr>
               <th className="p-2 border">Name</th>
               <th className="p-2 border">Party</th>
               <th className="p-2 border">Votes</th>
               <th className="p-2 border">Actions</th>
             </tr>
-          </thead>
+          </thead>}
           <tbody>
             {candidates.map((c) => (
               <tr key={c.id} className="text-center hover:bg-gray-50">
@@ -162,6 +162,10 @@ const CandidateList = () => {
           </div>
         ))}
       </div>
+
+      {candidates.length===0 && <div className="flex items-center justify-center mt-10">
+        <p className="text-gray-400 font-semibold text-2xl">No Data Available</p>
+      </div>}
 
       {/* Modal to add new candidate */}
       {isModalOpen && (
