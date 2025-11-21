@@ -12,7 +12,7 @@ const UserPage = () => {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
-
+// console.log("called...")
   return (
      <div className="flex w-full min-h-screen bg-gray-200">
           {/* min-h-screen is like min-height: 100vh */}

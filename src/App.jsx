@@ -19,7 +19,7 @@ function App() {
           <Route
             path="/user"
             element={
-              <ProtectedRoute role="user">
+              <ProtectedRoute role="voter">
                 <UserPage />
               </ProtectedRoute>
             }

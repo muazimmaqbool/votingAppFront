@@ -1,4 +1,3 @@
-
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 import { useState } from "react";
@@ -9,27 +8,52 @@ export default function Home() {
   const [aadhar, setAadhar] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async () => {
-    const response = {
-      name: "Muazim",
-      role: "admin", 
-    };
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    if (!aadhar || !password) {
+      alert("Please enter Aadhar and Password");
+      return;
+    }
 
-    login(response);
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/user/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            aadharCardNumber: aadhar,
+            password: password,
+          }),
+        }
+      );
+      if (!res.ok) {
+        const err = await res.json();
+        alert(err.error || "Invalid credentials");
+        return;
+      }
+      const data = await res.json();
+      console.log("user login:", data);
+      login(data);
 
-    if (response.role === "admin") navigate("/admin");
-    else navigate("/user");
+      if (data.role === "admin") {
+        navigate("/admin");
+      } else {
+        console.log("called...")
+        navigate("/user");
+      }
+    } catch (error) {
+      console.error("Login Error:", error);
+      alert("Something went wrong during login");
+    }
   };
 
   return (
     <div className="flex h-screem items-center justify-center">
       <div className="bg-white shadow-lg rounded-lg p-8 w-96">
+        <div className="text-2xl font-bold text-center mb-6">Voter Login</div>
 
-        <div className="text-2xl font-bold text-center mb-6">
-          Voter Login 
-        </div>
-
-         <label className="block mb-2 font-medium">Aadhar Card Number</label>
+        <label className="block mb-2 font-medium">Aadhar Card Number</label>
         <input
           type="text"
           maxLength="12"
@@ -39,7 +63,7 @@ export default function Home() {
           placeholder="Enter Aadhar Number"
         />
 
-         <label className="block mb-2 font-medium">Password</label>
+        <label className="block mb-2 font-medium">Password</label>
         <input
           type="password"
           value={password}
@@ -62,7 +86,6 @@ export default function Home() {
         >
           Register New Voter
         </button>
-
       </div>
     </div>
   );
