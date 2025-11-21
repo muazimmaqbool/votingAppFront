@@ -21,13 +21,32 @@ const RegisterUser = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
+// console.log("BASE URL:", import.meta.env.VITE_API_BASE_URL);
+    //console.log("Voter Registered:", formData);
+    try{
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/user/signup`,{
+        method:"POST",
+        headers:{
+          'Content-Type':"application/json",
+        },
+        body:JSON.stringify(formData)
+      })
+      if(!res.ok){
+        const errorData=await res.json()
+        console.log("errorData:",errorData)
+        alert(errorData?.error || "Registration failed")
+        return
+      }
+      const data=await res.json()
+      console.log("Voter Registered:", data)
 
-    console.log("Voter Registered:", formData);
-    //API Call
-
-    alert("Registration successful!");
-    navigate("/");
+      alert("Registration successful!")
+      navigate("/")
+    }catch(e){
+      console.log("Error while saving new user:",e)
+      alert("Failed to save new user")
+    }
   };
   return (
     <div className='flex justify-center items-center min-h-screen'>
