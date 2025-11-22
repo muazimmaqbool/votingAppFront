@@ -1,23 +1,23 @@
 import { useEffect, useState } from "react";
-import { getAllCandidates } from "../../APICalls/candidates";
+import { addCandidate, getAllCandidates } from "../../APICalls/candidates";
 import { useAuth } from "../../Context/AuthContext";
 
 const CandidateList = () => {
   const{jwtToken}=useAuth()
-  const [candidates, setCandidates] = useState([
-  ]);
+  const [candidates, setCandidates] = useState([]);
+  const [reload, setreload] = useState(false);
   useEffect(() => {
     if(jwtToken){
       getAllCandidates(setCandidates,jwtToken)
     }
-  }, [jwtToken]);
+  }, [jwtToken,reload]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showConfirm, setshowConfirm] = useState(false);
   const [candidateToDelete, setcandidateToDelete] = useState();
   const [newCandidate, setNewCandidate] = useState({
     name: "",
+    age:"",
     party: "",
-    votes: "",
   });
   const [editID, seteditID] = useState(null);
   const handleChange = (e) => {
@@ -28,33 +28,21 @@ const CandidateList = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!newCandidate.name || !newCandidate.party) {
+    if (!newCandidate.name || !newCandidate.age || !newCandidate.party) {
       alert("Please fill in all required fields!");
       return;
     }
     if (editID) {
       //updating existing candidate
-      setCandidates((prev) =>
-        prev.map((c) =>
-          c.id === editID
-            ? {
-                ...c,
-                name: newCandidate.name,
-                party: newCandidate?.party,
-              }
-            : c
-        )
-      );
+      //updating api here
     } else {
       //adding new candidate
       const newEntry = {
-        id: candidates.length + 1,
         name: newCandidate.name,
+        age:newCandidate.age,
         party: newCandidate.party,
-        votes: Number(newCandidate.votes) || 0,
       };
-
-      setCandidates((prev) => [...prev, newEntry]);
+      addCandidate(newEntry,jwtToken,setreload)
     }
 
     setNewCandidate({ name: "", party: "", votes: "" });
@@ -71,6 +59,7 @@ const CandidateList = () => {
     seteditID(candidate.id);
     setNewCandidate({
       name: candidate.name,
+      age:candidate.age,
       party: candidate.party,
     });
     setIsModalOpen(true);
@@ -194,6 +183,17 @@ const CandidateList = () => {
                   type="text"
                   name="name"
                   value={newCandidate.name}
+                  onChange={handleChange}
+                  className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+              </div>
+
+               <div>
+                <label className="block mb-1 font-medium">Age *</label>
+                <input
+                  type="number"
+                  name="age"
+                  value={newCandidate.age}
                   onChange={handleChange}
                   className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />

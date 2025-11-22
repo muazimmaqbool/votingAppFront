@@ -28,7 +28,8 @@ export const getAllCandidates = async (setCandidates, token) => {
   }
 };
 
-export const addCandidate = async (dataToSave, token) => {
+export const addCandidate = async (dataToSave, token,setreload) => {
+    // console.log("dataToSave:",dataToSave)
   try {
     const res = await fetch(
       `${import.meta.env.VITE_API_BASE_URL}/candidate`,
@@ -47,7 +48,8 @@ export const addCandidate = async (dataToSave, token) => {
       return;
     }
     const data = await res.json();
-    console.log("candidate added:", data);
+    // console.log("candidate added:", data);
+    setreload((prev)=>!prev)
     
   } catch (error) {
     console.log("Failed toadd candidate", error);
