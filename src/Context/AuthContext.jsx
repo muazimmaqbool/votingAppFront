@@ -10,11 +10,18 @@ export const AuthProvider = ({ children }) => {
   //children are different components
   
   //stores current logged in user info
-  const [user, setuser] = useState();
+  const [user, setuser] = useState(() => {
+    const savedUser = localStorage.getItem("logedUser");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
   const login = (data) => {
+    localStorage.setItem("logedUser", JSON.stringify(data));
     setuser(data);
   };
-  const logout = () => setuser(null);
+   const logout = () => {
+    localStorage.removeItem("logedUser");
+    setuser(null);
+  };
   return(
     <AuthContext.Provider value={{user,login,logout}}>
       {/* Sharing values to whole app*/}

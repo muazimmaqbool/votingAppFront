@@ -7,7 +7,8 @@ export default function Home() {
   const navigate = useNavigate(); //used to move to another page
   const [aadhar, setAadhar] = useState("");
   const [password, setPassword] = useState("");
-
+  const currentUser=localStorage.getItem("logedUser")
+  // console.log("currentUser:",currentUser)
   const handleLogin = async (e) => {
     e.preventDefault();
     if (!aadhar || !password) {
@@ -33,13 +34,17 @@ export default function Home() {
         return;
       }
       const data = await res.json();
-      console.log("user login:", data);
-      login(data);
+      // console.log("user login:", data);
+       login({
+        token: data.token,
+        name: data.name,
+        role: data.role,
+      });
 
       if (data.role === "admin") {
         navigate("/admin");
       } else {
-        console.log("called...")
+        // console.log("called...")
         navigate("/user");
       }
     } catch (error) {
