@@ -1,5 +1,4 @@
-import { useAuth } from "../Context/AuthContext";
-
+//used to handle all api calls for /candidate endpoint
 export const getAllCandidates = async (setCandidates, token) => {
   try {
     const res = await fetch(
@@ -56,3 +55,30 @@ export const addCandidate = async (dataToSave, token,setreload) => {
     alert("Failed to add candidate");
   }
 };
+
+export const deleteCandidate=async(id,token,setreload)=>{
+    // console.log("id to delete:",id)
+     try {
+    const res = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/candidate/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (!res.ok) {
+      const err = await res.json();
+      alert(err.error || "Failed to delete candidate");
+      return;
+    }
+    console.log("candidate delete successfully!")
+    setreload((prev)=>!prev)
+    
+  } catch (error) {
+    console.log("Failed delete candidate", error);
+    alert("Failed to delete candidate");
+  }
+}

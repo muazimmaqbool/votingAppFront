@@ -1,22 +1,27 @@
 import { useEffect, useState } from "react";
-import { addCandidate, getAllCandidates } from "../../APICalls/candidates";
+import {
+  addCandidate,
+  deleteCandidate,
+  getAllCandidates,
+} from "../../APICalls/candidates";
 import { useAuth } from "../../Context/AuthContext";
 
 const CandidateList = () => {
-  const{jwtToken}=useAuth()
+  const { jwtToken } = useAuth();
   const [candidates, setCandidates] = useState([]);
   const [reload, setreload] = useState(false);
   useEffect(() => {
-    if(jwtToken){
-      getAllCandidates(setCandidates,jwtToken)
+    if (jwtToken) {
+      setshowConfirm(false)
+      getAllCandidates(setCandidates, jwtToken);
     }
-  }, [jwtToken,reload]);
+  }, [jwtToken, reload]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showConfirm, setshowConfirm] = useState(false);
   const [candidateToDelete, setcandidateToDelete] = useState();
   const [newCandidate, setNewCandidate] = useState({
     name: "",
-    age:"",
+    age: "",
     party: "",
   });
   const [editID, seteditID] = useState(null);
@@ -39,10 +44,10 @@ const CandidateList = () => {
       //adding new candidate
       const newEntry = {
         name: newCandidate.name,
-        age:newCandidate.age,
+        age: newCandidate.age,
         party: newCandidate.party,
       };
-      addCandidate(newEntry,jwtToken,setreload)
+      addCandidate(newEntry, jwtToken, setreload);
     }
 
     setNewCandidate({ name: "", party: "", votes: "" });
@@ -50,16 +55,11 @@ const CandidateList = () => {
     setIsModalOpen(false);
   };
 
-  const handleDelete = (id) => {
-    setCandidates((prev) => prev.filter((c) => c.id !== id));
-    setshowConfirm(false)
-  };
-
   const handleEdit = (candidate) => {
     seteditID(candidate.id);
     setNewCandidate({
       name: candidate.name,
-      age:candidate.age,
+      age: candidate.age,
       party: candidate.party,
     });
     setIsModalOpen(true);
@@ -83,17 +83,19 @@ const CandidateList = () => {
       {/* for mobile screens it will be hidden and visible in large screens only */}
       <div className="overflow-x-auto hidden md:block">
         <table className="w-full border">
-          {candidates && candidates?.length>0 && <thead className="bg-gray-200">
-            <tr>
-              <th className="p-2 border">Name</th>
-              <th className="p-2 border">Age</th>
-              <th className="p-2 border">Party</th>
-              <th className="p-2 border">Votes</th>
-              <th className="p-2 border">Actions</th>
-            </tr>
-          </thead>}
+          {candidates && candidates?.length > 0 && (
+            <thead className="bg-gray-200">
+              <tr>
+                <th className="p-2 border">Name</th>
+                <th className="p-2 border">Age</th>
+                <th className="p-2 border">Party</th>
+                <th className="p-2 border">Votes</th>
+                <th className="p-2 border">Actions</th>
+              </tr>
+            </thead>
+          )}
           <tbody>
-            {candidates.map((c,index) => (
+            {candidates.map((c, index) => (
               <tr key={index} className="text-center hover:bg-gray-50">
                 <td className="p-2 border">{c.name}</td>
                 <td className="p-2 border">{c.age}</td>
@@ -124,7 +126,7 @@ const CandidateList = () => {
 
       {/* mobile : visible in small screen and hidden in large screens */}
       <div className="md:hidden space-y-4">
-        {candidates.map((c,index) => (
+        {candidates.map((c, index) => (
           <div
             key={index}
             className="bg-white shadow-md rounded-lg p-4 border border-gray-200"
@@ -163,9 +165,13 @@ const CandidateList = () => {
         ))}
       </div>
 
-      {candidates.length===0 && <div className="flex items-center justify-center mt-10">
-        <p className="text-gray-400 font-semibold text-2xl">No Data Available</p>
-      </div>}
+      {candidates.length === 0 && (
+        <div className="flex items-center justify-center mt-10">
+          <p className="text-gray-400 font-semibold text-2xl">
+            No Data Available
+          </p>
+        </div>
+      )}
 
       {/* Modal to add new candidate */}
       {isModalOpen && (
@@ -188,7 +194,7 @@ const CandidateList = () => {
                 />
               </div>
 
-               <div>
+              <div>
                 <label className="block mb-1 font-medium">Age *</label>
                 <input
                   type="number"
@@ -242,7 +248,7 @@ const CandidateList = () => {
           <div className="bg-white p-6 rounded shadow-lg w-80 text-center">
             <h3 className="text-lg font-semibold mb-3">Confirm Your Vote</h3>
             <p className="mb-4">
-              Are you sure you want to delete{" "}<br/>
+              Are you sure you want to delete <br />
               <span className="font-bold text-blue-700">
                 {candidateToDelete?.name}
               </span>
@@ -256,7 +262,9 @@ const CandidateList = () => {
                 Cancel
               </button>
               <button
-                onClick={() => handleDelete(candidateToDelete?.id)}
+                onClick={() =>
+                  deleteCandidate(candidateToDelete?._id, jwtToken, setreload)
+                }
                 className="px-4 py-2 bg-green-600 text-white rounded"
               >
                 Delete
