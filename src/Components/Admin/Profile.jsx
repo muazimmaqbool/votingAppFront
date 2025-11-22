@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../Context/AuthContext";
-import { getProfile } from "../../APICalls/userApi";
+import { getProfile, updateProfile } from "../../APICalls/userApi";
 
 export default function Profile() {
   const { jwtToken } = useAuth();
   const [profile, setprofile] = useState();
+  const [reload, setreload] = useState(false);
   useEffect(() => {
     if (jwtToken) {
+      setIsEditing(false)
       getProfile(jwtToken, setprofile);
     }
-  }, [jwtToken]);
+  }, [jwtToken,reload]);
 
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({});
@@ -34,7 +36,7 @@ export default function Profile() {
   // console.log("editData:",editData)
   const handleSave = (e) => {
     e.preventDefault();
-    setIsEditing(false);
+    updateProfile(editData,profile?._id,jwtToken,setreload)
   };
 
   return (

@@ -47,7 +47,7 @@ export const addCandidate = async (dataToSave, token,setreload) => {
       return;
     }
     const data = await res.json();
-    // console.log("candidate added:", data);
+     console.log("candidate added:", data);
     setreload((prev)=>!prev)
     
   } catch (error) {
@@ -104,7 +104,7 @@ export const updateCandidate = async (dataToUpdate,id, token,setreload) => {
       return;
     }
     const data = await res.json();
-    //  console.log("candidate updated:", data);
+    console.log("candidate updated:", data);
     setreload((prev)=>!prev)
     
   } catch (error) {
