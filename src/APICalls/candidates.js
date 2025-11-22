@@ -82,3 +82,33 @@ export const deleteCandidate=async(id,token,setreload)=>{
     alert("Failed to delete candidate");
   }
 }
+
+export const updateCandidate = async (dataToUpdate,id, token,setreload) => {
+    // console.log("id to update:",id)
+    // console.log("dataToUpdate:",dataToUpdate)
+  try {
+    const res = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/candidate/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+         body:JSON.stringify(dataToUpdate)
+      }
+    );
+    if (!res.ok) {
+      const err = await res.json();
+      alert(err.error || "Failed to update candidate");
+      return;
+    }
+    const data = await res.json();
+    //  console.log("candidate updated:", data);
+    setreload((prev)=>!prev)
+    
+  } catch (error) {
+    console.log("Failed toupdate candidate", error);
+    alert("Failed to update candidate");
+  }
+};

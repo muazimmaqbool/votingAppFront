@@ -3,6 +3,7 @@ import {
   addCandidate,
   deleteCandidate,
   getAllCandidates,
+  updateCandidate,
 } from "../../APICalls/candidates";
 import { useAuth } from "../../Context/AuthContext";
 
@@ -12,7 +13,7 @@ const CandidateList = () => {
   const [reload, setreload] = useState(false);
   useEffect(() => {
     if (jwtToken) {
-      setshowConfirm(false)
+      setshowConfirm(false);
       getAllCandidates(setCandidates, jwtToken);
     }
   }, [jwtToken, reload]);
@@ -40,6 +41,13 @@ const CandidateList = () => {
     if (editID) {
       //updating existing candidate
       //updating api here
+      // console.log("called...")
+      const updateEntry = {
+        name: newCandidate.name,
+        age: newCandidate.age,
+        party: newCandidate.party,
+      };
+     updateCandidate(updateEntry, editID, jwtToken, setreload);
     } else {
       //adding new candidate
       const newEntry = {
@@ -56,7 +64,7 @@ const CandidateList = () => {
   };
 
   const handleEdit = (candidate) => {
-    seteditID(candidate.id);
+    seteditID(candidate._id);
     setNewCandidate({
       name: candidate.name,
       age: candidate.age,

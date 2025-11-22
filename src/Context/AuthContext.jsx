@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
     setuser(null);
   };
   const jwtToken=JSON.parse(localStorage.getItem("logedUser")).token
-  console.log("jwtToken:",jwtToken)
+  // console.log("jwtToken:",jwtToken)
   return(
     <AuthContext.Provider value={{user,login,logout,jwtToken}}>
       {/* Sharing values to whole app*/}
