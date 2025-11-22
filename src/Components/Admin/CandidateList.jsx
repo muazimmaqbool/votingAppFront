@@ -97,6 +97,7 @@ const CandidateList = () => {
           {candidates && candidates?.length>0 && <thead className="bg-gray-200">
             <tr>
               <th className="p-2 border">Name</th>
+              <th className="p-2 border">Age</th>
               <th className="p-2 border">Party</th>
               <th className="p-2 border">Votes</th>
               <th className="p-2 border">Actions</th>
@@ -106,6 +107,7 @@ const CandidateList = () => {
             {candidates.map((c,index) => (
               <tr key={index} className="text-center hover:bg-gray-50">
                 <td className="p-2 border">{c.name}</td>
+                <td className="p-2 border">{c.age}</td>
                 <td className="p-2 border">{c.party}</td>
                 <td className="p-2 border">{c.voteCount}</td>
                 <td className="p-2 border space-x-2">
@@ -140,6 +142,9 @@ const CandidateList = () => {
           >
             <p>
               <span className="font-semibold">Name:</span> {c.name}
+            </p>
+            <p>
+              <span className="font-semibold">Age:</span> {c.age}
             </p>
             <p>
               <span className="font-semibold">Party:</span> {c.party}

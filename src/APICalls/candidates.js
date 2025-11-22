@@ -28,7 +28,7 @@ export const getAllCandidates = async (setCandidates, token) => {
   }
 };
 
-export const addCandidate = async (data, token) => {
+export const addCandidate = async (dataToSave, token) => {
   try {
     const res = await fetch(
       `${import.meta.env.VITE_API_BASE_URL}/candidate`,
@@ -38,20 +38,19 @@ export const addCandidate = async (data, token) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
+         body:JSON.stringify(dataToSave)
       }
     );
     if (!res.ok) {
       const err = await res.json();
-      alert(err.error || "Failed to fetch candidates");
+      alert(err.error || "Failed to add candidate");
       return;
     }
     const data = await res.json();
-    // console.log("user login:", data);
-    if (data && data.length > 0) {
-      setCandidates(data);
-    }
+    console.log("candidate added:", data);
+    
   } catch (error) {
-    console.log("Failed to fetch candidates", error);
-    alert("Failed to fetch candidates");
+    console.log("Failed toadd candidate", error);
+    alert("Failed to add candidate");
   }
 };
