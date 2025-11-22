@@ -22,8 +22,10 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("logedUser");
     setuser(null);
   };
+  const jwtToken=JSON.parse(localStorage.getItem("logedUser")).token
+  console.log("jwtToken:",jwtToken)
   return(
-    <AuthContext.Provider value={{user,login,logout}}>
+    <AuthContext.Provider value={{user,login,logout,jwtToken}}>
       {/* Sharing values to whole app*/}
         {children}
     </AuthContext.Provider>

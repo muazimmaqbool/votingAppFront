@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getAllCandidates } from "../../APICalls/candidates";
+import { useAuth } from "../../Context/AuthContext";
 
 const CandidateList = () => {
+  const{jwtToken}=useAuth()
   const [candidates, setCandidates] = useState([
-    { id: 1, name: "John Doe", party: "ABC", votes: 125 },
-    { id: 2, name: "Jane Smith", party: "XYZ", votes: 90 },
   ]);
+  useEffect(() => {
+    if(jwtToken){
+      getAllCandidates(setCandidates,jwtToken)
+    }
+  }, [jwtToken]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showConfirm, setshowConfirm] = useState(false);
   const [candidateToDelete, setcandidateToDelete] = useState();
@@ -97,11 +103,11 @@ const CandidateList = () => {
             </tr>
           </thead>}
           <tbody>
-            {candidates.map((c) => (
-              <tr key={c.id} className="text-center hover:bg-gray-50">
+            {candidates.map((c,index) => (
+              <tr key={index} className="text-center hover:bg-gray-50">
                 <td className="p-2 border">{c.name}</td>
                 <td className="p-2 border">{c.party}</td>
-                <td className="p-2 border">{c.votes}</td>
+                <td className="p-2 border">{c.voteCount}</td>
                 <td className="p-2 border space-x-2">
                   <button
                     className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
@@ -127,9 +133,9 @@ const CandidateList = () => {
 
       {/* mobile : visible in small screen and hidden in large screens */}
       <div className="md:hidden space-y-4">
-        {candidates.map((c) => (
+        {candidates.map((c,index) => (
           <div
-            key={c.id}
+            key={index}
             className="bg-white shadow-md rounded-lg p-4 border border-gray-200"
           >
             <p>
@@ -139,7 +145,7 @@ const CandidateList = () => {
               <span className="font-semibold">Party:</span> {c.party}
             </p>
             <p>
-              <span className="font-semibold">Votes:</span> {c.votes}
+              <span className="font-semibold">Votes:</span> {c.voteCount}
             </p>
 
             <div className="mt-3 flex gap-2">
