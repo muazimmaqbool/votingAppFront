@@ -55,3 +55,31 @@ export const updateProfile= async (dataToUpdate,id, token,setreload) => {
     alert("Failed to user candidate");
   }
 };
+
+export const getAllVoters = async (setVoters, token) => {
+  try {
+    const res = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/user/all`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (!res.ok) {
+      const err = await res.json();
+      alert(err.error || "Failed to fetch voters");
+      return;
+    }
+    const data = await res.json();
+    // console.log("user login:", data);
+    if (data && data.length > 0) {
+      setVoters(data);
+    }
+  } catch (error) {
+    console.log("Failed to fetch voters", error);
+    alert("Failed to fetch voters");
+  }
+};

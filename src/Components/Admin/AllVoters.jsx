@@ -1,31 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../../Context/AuthContext";
+import { getAllVoters } from "../../APICalls/userApi";
 
 const AllVoters = () => {
-      const [voters, setVoters] = useState([
-    {
-      id: 1,
-      name: "Ayaan Ahmad",
-      address: "Srinagar, Batamaloo",
-      aadhar: "1234-5678-9000",
-      hasVoted: false,
-    },
-    {
-      id: 2,
-      name: "Zoya Mir",
-      address: "Baramulla",
-      aadhar: "7890-1234-4567",
-      hasVoted: true,
-    },
-    {
-      id: 3,
-      name: "Fayaz Lone",
-      address: "Anantnag",
-      aadhar: "1111-2222-3333",
-      hasVoted: false,
-    },
-  ]);
+  const { jwtToken } = useAuth();
+  const [voters, setVoters] = useState([]);
+  useEffect(() => {
+    if (jwtToken) {
+      getAllVoters(setVoters, jwtToken);
+    }
+  }, [jwtToken]);
+  // console.log("voters:",voters)
+
   return (
-   <div className="w-full">
+    <div className="w-full">
       <h2 className="text-2xl font-bold mb-4">All Voters</h2>
 
       {/* for large screens*/}
@@ -44,9 +32,9 @@ const AllVoters = () => {
               <tr key={v.id} className="text-center hover:bg-gray-50">
                 <td className="p-2 border">{v.name}</td>
                 <td className="p-2 border">{v.address}</td>
-                <td className="p-2 border">{v.aadhar}</td>
+                <td className="p-2 border">{v.aadharCardNumber}</td>
                 <td className="p-2 border">
-                  {v.hasVoted ? (
+                  {v.isVoted ? (
                     <span className="text-green-600 font-semibold">Yes</span>
                   ) : (
                     <span className="text-red-600 font-semibold">No</span>
@@ -58,7 +46,7 @@ const AllVoters = () => {
         </table>
       </div>
 
-{/* for small screens */}
+      {/* for small screens */}
       <div className="md:hidden space-y-4">
         {voters.map((v) => (
           <div
@@ -86,7 +74,7 @@ const AllVoters = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AllVoters
+export default AllVoters;
