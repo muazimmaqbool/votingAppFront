@@ -1,24 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../Context/AuthContext";
+import { getProfile } from "../../APICalls/userApi";
 
 export default function Profile() {
-  const { user} = useAuth(); 
+  const { jwtToken } = useAuth();
+  const [profile, setprofile] = useState();
+  useEffect(() => {
+    if (jwtToken) {
+      getProfile(jwtToken, setprofile);
+    }
+  }, [jwtToken]);
+
   const [isEditing, setIsEditing] = useState(false);
-  const [editData, setEditData] = useState({
-    name: user?.name || "",
-    age: user?.age || "",
-    email: user?.email || "",
-    phone: user?.phone || "",
-    address: user?.address || "",
-    aadhar: user?.aadhar || "",
-    role: user?.role || "",
-  });
+  const [editData, setEditData] = useState({});
+  useEffect(() => {
+    if (profile) {
+      setEditData({
+        name: profile?.name || "",
+        age: profile?.age || "",
+        email: profile?.email || "",
+        phone: profile?.phone || "",
+        address: profile?.address || "",
+        aadharCardNumber: profile?.aadharCardNumber || "",
+        role: profile?.role || "",
+      });
+    }
+  }, [profile]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditData((prev) => ({ ...prev, [name]: value }));
   };
-  console.log("editData:",editData)
+  // console.log("editData:",editData)
   const handleSave = (e) => {
     e.preventDefault();
     setIsEditing(false);
@@ -29,13 +42,27 @@ export default function Profile() {
       <h2 className="text-2xl font-bold mb-4">My Profile</h2>
 
       <div className="bg-white shadow p-6 rounded-lg space-y-3">
-        <p><strong>Name:</strong> {user?.name}</p>
-        <p><strong>Age:</strong> {user?.age}</p>
-        <p><strong>Email:</strong> {user?.email}</p>
-        <p><strong>Phone:</strong> {user?.phone}</p>
-        <p><strong>Address:</strong> {user?.address}</p>
-        <p><strong>Aadhaar Card:</strong> {user?.aadhar}</p>
-        <p><strong>Role:</strong> {user?.role}</p>
+        <p>
+          <strong>Name:</strong> {profile?.name}
+        </p>
+        <p>
+          <strong>Age:</strong> {profile?.age}
+        </p>
+        <p>
+          <strong>Email:</strong> {profile?.email}
+        </p>
+        <p>
+          <strong>Phone:</strong> {profile?.phone}
+        </p>
+        <p>
+          <strong>Address:</strong> {profile?.address}
+        </p>
+        <p>
+          <strong>Aadhaar Card:</strong> {profile?.aadharCardNumber}
+        </p>
+        <p>
+          <strong>Role:</strong> {profile?.role}
+        </p>
 
         <button
           onClick={() => setIsEditing(true)}
@@ -109,25 +136,13 @@ export default function Profile() {
               <div>
                 <label className="block mb-1 font-medium">Aadhaar Card</label>
                 <input
-                type="number"
+                  type="number"
                   name="aadhar"
-                  value={editData.aadhar}
+                  value={editData.aadharCardNumber}
                   onChange={handleChange}
                   className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
                 />
               </div>
-
-              <div>
-                <label className="block mb-1 font-medium">Role</label>
-                <input
-                  name="role"
-                  value={editData.role}
-                  onChange={handleChange}
-                  className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
-                  readOnly
-                />
-              </div>
-
               <div className="flex justify-end gap-3 mt-4">
                 <button
                   type="button"
