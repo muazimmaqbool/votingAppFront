@@ -76,8 +76,8 @@ export const getAllVoters = async (setVoters, token) => {
   }
 };
 
-export const updatePassword = async (currentPassword, newPassword, token) => {
-    console.log("currentPassword:",.currentPassword)
+export const updatePassword = async (currentPassword, newPassword, token, handleLogout) => {
+    console.log("currentPassword:",currentPassword)
     console.log("newPassword:",newPassword)
   try {
     const res = await fetch(
@@ -101,6 +101,8 @@ export const updatePassword = async (currentPassword, newPassword, token) => {
     }
     const data = await res.json();
     console.log("password updated:", data);
+    alert("Password changed successfully!");
+     handleLogout();
   } catch (error) {
     console.log("Failed to update password", error);
     alert("Failed to update password");

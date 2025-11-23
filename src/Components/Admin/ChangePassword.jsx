@@ -1,17 +1,25 @@
 import { useState } from "react";
+import { updatePassword } from "../../APICalls/userApi";
+import { useAuth } from "../../Context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-const ChangePassword=()=> {
+const ChangePassword = () => {
+  const navigate = useNavigate();
+  const { jwtToken, logout } = useAuth();
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newPassword !== confirmPassword) {
       alert("New passwords do not match!");
       return;
     }
-    alert("Password changed successfully!");
+    updatePassword(oldPassword, newPassword, jwtToken, handleLogout);
   };
 
   return (
@@ -57,7 +65,6 @@ const ChangePassword=()=> {
       </form>
     </div>
   );
-}
+};
 
-
-export default ChangePassword
+export default ChangePassword;
