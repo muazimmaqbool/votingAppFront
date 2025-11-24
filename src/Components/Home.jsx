@@ -7,8 +7,10 @@ export default function Home() {
   const navigate = useNavigate(); //used to move to another page
   const [aadhar, setAadhar] = useState("");
   const [password, setPassword] = useState("");
-  const currentUser=localStorage.getItem("logedUser")
+  const currentUser = localStorage.getItem("logedUser");
   // console.log("currentUser:",currentUser)
+
+  const [showAdminCredentials, setshowAdminCredentials] = useState(false);
   const handleLogin = async (e) => {
     e.preventDefault();
     if (!aadhar || !password) {
@@ -35,7 +37,7 @@ export default function Home() {
       }
       const data = await res.json();
       // console.log("user login:", data);
-       login({
+      login({
         token: data.token,
         name: data.name,
         role: data.role,
@@ -80,17 +82,59 @@ export default function Home() {
         {/* Login Button */}
         <button
           onClick={handleLogin}
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition cursor-pointer"
+          className={`w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition cursor-pointer ${
+            showAdminCredentials && "opacity-50"
+          }`}
         >
           Login
         </button>
 
         <button
           onClick={() => navigate("/register")}
-          className="w-full mt-3 bg-gray-200 text-gray-900 py-2 rounded hover:bg-gray-300 transition cursor-pointer"
+          className={`w-full mt-3 bg-gray-200 text-gray-900 py-2 rounded hover:bg-gray-300 transition cursor-pointer ${
+            showAdminCredentials && "opacity-50"
+          }`}
         >
           Register New Voter
         </button>
+        <button
+          onClick={() => setshowAdminCredentials(true)}
+          className={`w-full mt-4 bg-yellow-500 text-white py-2 rounded hover:bg-yellow-600 transition cursor-pointer ${
+            showAdminCredentials && "opacity-50"
+          }`}
+        >
+          Show Admin Credentials
+        </button>
+
+        {showAdminCredentials && (
+          <div
+            className="fixed inset-0 flex items-center justify-center "
+            onClick={() => setshowAdminCredentials(false)}
+          >
+            <div
+              className="bg-white rounded-lg p-8 w-90 shadow-lg border-2 border-solid border-gray-300"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h2 className="text-xl font-bold mb-3 text-center">
+                Admin Credentials
+              </h2>
+
+              <p className="mb-2">
+                <strong>Aadhar Number:</strong> 123456789012
+              </p>
+              <p className="mb-4">
+                <strong>Password:</strong> admin123
+              </p>
+
+              <button
+                onClick={() => setshowAdminCredentials(false)}
+                className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 cursor-pointer"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
