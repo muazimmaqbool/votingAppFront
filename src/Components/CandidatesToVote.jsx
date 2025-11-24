@@ -1,40 +1,44 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useAuth } from '../Context/AuthContext';
+import { getAllCandidates, voteCandidate } from '../APICalls/candidates';
+import { getProfile } from '../APICalls/userApi';
 
 const CandidatesToVote = () => {
-const candidates = [
-  { id: 1, name: "Aadil Sheikh", party: "People's Reform Party" },
-  { id: 2, name: "Sana Mir", party: "National Unity Front" },
-  { id: 3, name: "Umar Rafiq", party: "Progressive Youth Alliance" },
-  { id: 4, name: "Mehreen Fatima", party: "Democratic Vision Party" },
-  { id: 5, name: "Rayyan Bashir", party: "Green Valley Movement" },
-  { id: 6, name: "Hamza Lone", party: "Justice & Welfare League" },
-  { id: 7, name: "Iqra Shafi", party: "Peace & Development Council" },
-  { id: 8, name: "Zaid Ahmad", party: "Future Leaders Party" },
-];
-
-
+const { jwtToken } = useAuth();
+  const [candidates, setCandidates] = useState([]);
+  const [profile, setprofile] = useState();
   const [selectedCandidate, setSelectedCandidate] = useState(null); 
   const [showConfirm, setShowConfirm] = useState(false);
-  const [votedCandidateId, setVotedCandidateId] = useState(null); 
+  const [votedCandidateId, setVotedCandidateId] = useState(null);
+  const [reload, setreload] = useState(false);
+  useEffect(() => {
+    if (jwtToken) {
+      setShowConfirm(false);
+      getProfile(jwtToken, setprofile);
+      getAllCandidates(setCandidates, jwtToken);
+    }
+  }, [jwtToken, reload]);
+// console.log("candidates:",candidates);
+// console.log("profile:",profile);
+ 
 
   const handleVoteClick = (candidate) => {
     if (votedCandidateId) return;
     setSelectedCandidate(candidate);
     setShowConfirm(true);
   };
-
+// console.log("selectedCandidate:",selectedCandidate);
   const confirmVote = () => {
-    setVotedCandidateId(selectedCandidate.id);
-    setShowConfirm(false);
+   voteCandidate(selectedCandidate?._id,jwtToken,setreload)
   };
+  // console.log("votedCandidateId:",votedCandidateId);
 
   return (
     <div>
 
       <div className="bg-yellow-200 text-yellow-800 border border-yellow-500 p-3 rounded mb-4">
-        ⚠ Once you vote, you cannot undo or change your vote.
+        {profile?.isVoted ? "✔️ You have already voted, you can't undo or vote again":"⚠ Once you vote, you cannot undo or change your vote."}
       </div>
-
       <h2 className="text-2xl font-bold mb-4">Candidates</h2>
 
     {/*
@@ -43,22 +47,22 @@ const candidates = [
     -> Responsively displays 1, 2, or 3 candidates per row i.e one column on smaller
     */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {candidates.map((c) => (
+        {candidates.map((c,index)=> (
           <div
-            key={c.id}
+            key={index}
             className="bg-white p-4 shadow rounded border"
           >
             <p className="font-semibold text-lg">{c.name}</p>
             <p className="text-gray-600 mb-3">{c.party}</p>
 
-            {votedCandidateId === c.id ? (
+            {votedCandidateId === c._id ? (
               <p className="text-green-600 font-semibold">✔ You voted here</p>
             ) : (
               <button
-                disabled={votedCandidateId !== null}
+                disabled={profile?.isVoted}
                 onClick={() => handleVoteClick(c)}
                 className={`px-4 py-2 rounded text-white 
-                  ${votedCandidateId !== null ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"}
+                  ${profile?.isVoted ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"}
                 `}
               >
                 Vote

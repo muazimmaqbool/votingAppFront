@@ -112,3 +112,33 @@ export const updateCandidate = async (dataToUpdate,id, token,setreload) => {
     alert("Failed to update candidate");
   }
 };
+
+export const voteCandidate = async (id, token,setreload) => {
+   console.log("voting to:",id)
+  try {
+    const res = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/candidate/vote/${id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (!res.ok) {
+      const err = await res.json();
+      setreload((prev)=>!prev)
+      alert(err.message || "Failed to vote the candidate");
+      return;
+    }
+    const data = await res.json();
+    console.log("voted:",data);
+    alert(data?.message)
+    setreload((prev)=>!prev)
+    
+  } catch (error) {
+    console.log("Failed to vote the candidate", error);
+    alert("Failed to vote the candidate");
+  }
+};
