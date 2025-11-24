@@ -1,12 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 import { useState } from "react";
+import { FaRegCopy } from "react-icons/fa";
+import { MdDone } from "react-icons/md";
 
 export default function Home() {
   const { login } = useAuth();
   const navigate = useNavigate(); //used to move to another page
   const [aadhar, setAadhar] = useState("");
   const [password, setPassword] = useState("");
+  const [aadharCoped, setaadharCoped] = useState(false);
   const currentUser = localStorage.getItem("logedUser");
   // console.log("currentUser:",currentUser)
 
@@ -104,7 +107,10 @@ export default function Home() {
         {showAdminCredentials && (
           <div
             className="fixed inset-0 bg-black/50 flex items-center justify-center "
-            onClick={() => setshowAdminCredentials(false)}
+            onClick={() => {
+              setshowAdminCredentials(false);
+              setaadharCoped(false);
+            }}
           >
             {/*
             inset-0: it applies: top: 0; right: 0; bottom: 0; left: 0;
@@ -127,15 +133,32 @@ export default function Home() {
                 Admin Credentials
               </h2>
 
-              <p className="mb-2">
+              <p className="mb-2 flex items-center gap-2">
                 <strong>Aadhar Number:</strong> 123456789012
+                {aadharCoped ? (
+                  <MdDone />
+                ) : (
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => {
+                      navigator.clipboard.writeText("111111222222");
+                      //alert("Aadhar Number Copied!");
+                      setaadharCoped(true);
+                    }}
+                  >
+                    <FaRegCopy />
+                  </div>
+                )}
               </p>
               <p className="mb-4">
                 <strong>Password:</strong> admin123
               </p>
 
               <button
-                onClick={() => setshowAdminCredentials(false)}
+                onClick={() => {
+                  setshowAdminCredentials(false);
+                  setaadharCoped(false);
+                }}
                 className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 cursor-pointer"
               >
                 Close
