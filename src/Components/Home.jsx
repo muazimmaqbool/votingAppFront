@@ -82,35 +82,43 @@ export default function Home() {
         {/* Login Button */}
         <button
           onClick={handleLogin}
-          className={`w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition cursor-pointer ${
-            showAdminCredentials && "opacity-50"
-          }`}
+          className={`w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition cursor-pointer `}
         >
           Login
         </button>
 
         <button
           onClick={() => navigate("/register")}
-          className={`w-full mt-3 bg-gray-200 text-gray-900 py-2 rounded hover:bg-gray-300 transition cursor-pointer ${
-            showAdminCredentials && "opacity-50"
-          }`}
+          className={`w-full mt-3 bg-gray-200 text-gray-900 py-2 rounded hover:bg-gray-300 transition cursor-pointer `}
         >
           Register New Voter
         </button>
         <button
           onClick={() => setshowAdminCredentials(true)}
-          className={`w-full mt-4 bg-yellow-500 text-white py-2 rounded hover:bg-yellow-600 transition cursor-pointer ${
-            showAdminCredentials && "opacity-50"
-          }`}
+          className={`w-full mt-4 bg-yellow-500 text-white py-2 rounded hover:bg-yellow-600 transition cursor-pointer 
+            `}
         >
           Show Admin Credentials
         </button>
 
         {showAdminCredentials && (
           <div
-            className="fixed inset-0 flex items-center justify-center "
+            className="fixed inset-0 bg-black/50 flex items-center justify-center "
             onClick={() => setshowAdminCredentials(false)}
           >
+            {/*
+            inset-0: it applies: top: 0; right: 0; bottom: 0; left: 0;
+            It makes the element stretch to cover the entire screen (or its parent if positioned relative).
+            +-----------------------------------------+
+            |  fixed overlay (fills whole screen)     |
+            |  inset-0 applied here                   |
+            |                                         |
+            |     +-----------------------------+     |
+            |     |   centered modal box        |     |
+            |     +-----------------------------+     |
+            +-----------------------------------------+
+
+            */}
             <div
               className="bg-white rounded-lg p-8 w-90 shadow-lg border-2 border-solid border-gray-300"
               onClick={(e) => e.stopPropagation()}
