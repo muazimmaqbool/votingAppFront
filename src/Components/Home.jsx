@@ -151,7 +151,7 @@ export default function Home() {
                 )}
               </p>
               <p className="mb-4">
-                <strong>Password:</strong> admin123
+                <strong>Password:</strong> Admin123
               </p>
 
               <button
