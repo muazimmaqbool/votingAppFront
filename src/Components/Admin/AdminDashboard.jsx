@@ -63,6 +63,16 @@ const AdminDashboard = () => {
             Candidates
           </NavLink>
            <NavLink
+            to="voteCount"
+            className={({ isActive }) =>
+              `block px-3 py-2 rounded hover:bg-blue-900 ${
+                isActive ? "bg-blue-900" : ""
+              }`
+            }
+          >
+            Vote Count
+          </NavLink>
+           <NavLink
             to="voters"
             className={({ isActive }) =>
               `block px-3 py-2 rounded hover:bg-blue-900 ${

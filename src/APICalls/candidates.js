@@ -142,3 +142,30 @@ export const voteCandidate = async (id, token,setreload) => {
     alert("Failed to vote the candidate");
   }
 };
+
+//getting votecount
+export const getVoteCount = async (setvotCount, token) => {
+  try {
+    const res = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/candidate/vote/count`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (!res.ok) {
+      const err = await res.json();
+      alert(err.error || "Failed to fetch vote count");
+      return;
+    }
+    const data = await res.json();
+   // console.log("vote count:", data);
+    setvotCount(data)
+  } catch (error) {
+    console.log("Failed to fetch vote count", error);
+    alert("Failed to fetch vote count");
+  }
+};

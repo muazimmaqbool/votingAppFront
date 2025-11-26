@@ -9,6 +9,7 @@ import Profile from "./Components/Admin/Profile";
 import ChangePassword from "./Components/Admin/ChangePassword";
 import AllVoters from "./Components/Admin/AllVoters";
 import CandidatesToVote from "./Components/CandidatesToVote";
+import VoteCount from "./Components/Admin/VoteCount";
 function App() {
   return (
     <div className="relative flex items-center justify-center w-full h-screen bg-zinc-800">
@@ -42,6 +43,7 @@ function App() {
             {/* the replace prevents adding extra history entries (so back button won’t go back to the redirect) */}
             {/* <Navigate> is a special React Router component that automatically redirects the user to another route. */}
             <Route path="candidates" element={<CandidateList />} />
+            <Route path="voteCount" element={<VoteCount/>}/>
             <Route path="voters" element={<AllVoters />} />
             <Route path="profile" element={<Profile />} />
             <Route path="change-password" element={<ChangePassword />} />
