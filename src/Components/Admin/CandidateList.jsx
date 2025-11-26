@@ -97,7 +97,7 @@ const CandidateList = () => {
                 <th className="p-2 border">Name</th>
                 <th className="p-2 border">Age</th>
                 <th className="p-2 border">Party</th>
-                <th className="p-2 border">Votes</th>
+                {/* <th className="p-2 border">Votes</th> */}
                 <th className="p-2 border">Actions</th>
               </tr>
             </thead>
@@ -108,7 +108,7 @@ const CandidateList = () => {
                 <td className="p-2 border">{c.name}</td>
                 <td className="p-2 border">{c.age}</td>
                 <td className="p-2 border">{c.party}</td>
-                <td className="p-2 border">{c.voteCount}</td>
+                {/* <td className="p-2 border">{c.voteCount}</td> */}
                 <td className="p-2 border space-x-2">
                   <button
                     className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
