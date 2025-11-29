@@ -19,12 +19,13 @@ const RegisterUser = () => {
       [name]: value,
     }));
   };
-
+  const [isloadting, setisloadting] = useState(false);
   const handleSubmit = async (e) => {
   e.preventDefault();
 // console.log("BASE URL:", import.meta.env.VITE_API_BASE_URL);
     //console.log("Voter Registered:", formData);
     try{
+      setisloadting(true)
       const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/user/signup`,{
         method:"POST",
         headers:{
@@ -33,17 +34,20 @@ const RegisterUser = () => {
         body:JSON.stringify(formData)
       })
       if(!res.ok){
+        setisloadting(false)
         const errorData=await res.json()
         console.log("errorData:",errorData)
         alert(errorData?.error || "Registration failed")
         return
       }
+      setisloadting(false)
       const data=await res.json()
       console.log("Voter Registered:", data)
 
       alert("Registration successful!")
       navigate("/")
     }catch(e){
+      setisloadting(false)
       console.log("Error while saving new user:",e)
       alert("Failed to save new user")
     }
@@ -138,7 +142,7 @@ const RegisterUser = () => {
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded cursor-pointer hover:bg-blue-700 transition"
         >
-          Register
+          {isloadting ? "Registering..." : "Register"}
         </button>
 
         <button
