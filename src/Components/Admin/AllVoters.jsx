@@ -68,7 +68,7 @@ const AllVoters = () => {
                   <span className="font-semibold">Address:</span> {v.address}
                 </p>
                 <p>
-                  <span className="font-semibold">Aadhar:</span> {v.aadhar}
+                  <span className="font-semibold">Aadhar:</span> {v.aadharCardNumber}
                 </p>
                 <p className="mt-2">
                   <span className="font-semibold">Voted:</span>{" "}
