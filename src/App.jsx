@@ -12,7 +12,7 @@ import CandidatesToVote from "./Components/CandidatesToVote";
 import VoteCount from "./Components/Admin/VoteCount";
 function App() {
   return (
-    <div className="relative flex items-center justify-center w-full h-screen bg-zinc-800">
+    <div className="relative flex items-center justify-center w-full h-screen bg-zinc-800 overflow-hidden">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />

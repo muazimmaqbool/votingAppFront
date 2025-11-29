@@ -13,13 +13,13 @@ const AllVoters = () => {
   // console.log("voters:",voters)
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full overflow-auto">
       <h2 className="text-2xl font-bold mb-4">All Voters</h2>
 
       {/* for large screens*/}
-      <div className="overflow-x-auto hidden md:block">
+      <div className="overflow-x-auto hidden md:block overflow-y-auto h-[85vh]">
         <table className="w-full border">
-          <thead className="bg-gray-200">
+          <thead className="bg-gray-200 sticky ">
             <tr>
               <th className="p-2 border">Name</th>
               <th className="p-2 border">Address</th>
@@ -34,7 +34,7 @@ const AllVoters = () => {
                 <td className="p-2 border">{v.address}</td>
                 <td className="p-2 border">{v.aadharCardNumber}</td>
                 <td className="p-2 border">
-                  {v.isVoted ? (
+                  {v.isVoted ? (  
                     <span className="text-green-600 font-semibold">Yes</span>
                   ) : (
                     <span className="text-red-600 font-semibold">No</span>
@@ -47,7 +47,7 @@ const AllVoters = () => {
       </div>
 
       {/* for small screens */}
-      <div className="md:hidden space-y-4">
+      <div className="md:hidden space-y-4 overflow-y-auto h-[85vh]">
         {voters.map((v) => (
           <div
             key={v.id}
