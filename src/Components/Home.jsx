@@ -14,6 +14,8 @@ export default function Home() {
   // console.log("currentUser:",currentUser)
 
   const [showAdminCredentials, setshowAdminCredentials] = useState(false);
+  const [showVoterInstructions, setShowVoterInstructions] = useState(false);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     if (!aadhar || !password) {
@@ -98,10 +100,16 @@ export default function Home() {
         </button>
         <button
           onClick={() => setshowAdminCredentials(true)}
-          className={`w-full mt-4 bg-yellow-500 text-white py-2 rounded hover:bg-yellow-600 transition cursor-pointer 
+          className={`w-full mt-4 bg-yellow-500 text-white py-1 rounded hover:bg-yellow-600 transition cursor-pointer 
             `}
         >
           Show Admin Credentials
+        </button>
+        <button
+          onClick={() => setShowVoterInstructions(true)}
+          className="w-full mt-3 bg-purple-600 text-white py-1 rounded hover:bg-purple-700 transition cursor-pointer"
+        >
+          Get Voter Credentials
         </button>
 
         {showAdminCredentials && (
@@ -160,6 +168,53 @@ export default function Home() {
                   setaadharCoped(false);
                 }}
                 className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 cursor-pointer"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+        {showVoterInstructions && (
+          <div
+            className="fixed inset-0 bg-black/50 flex items-center justify-center"
+            onClick={() => setShowVoterInstructions(false)}
+          >
+            <div
+              className="bg-white rounded-lg p-8 w-[90%] max-w-md shadow-lg border"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h2 className="text-xl font-bold mb-4 text-center text-purple-700">
+                How to Get Voter Credentials
+              </h2>
+
+              <ol className="list-decimal pl-5 space-y-2 text-gray-800">
+                <li>
+                  Login to <strong>Admin Panel</strong>
+                </li>
+                <li>
+                  Go to <strong>All Voters</strong> section
+                </li>
+                <li>
+                  Copy the <strong>Aadhar Card Number</strong> of the voter
+                </li>
+                <li>Logout from Admin</li>
+                <li>Paste the Aadhar Number in login screen</li>
+                <li>
+                  Use password:{" "}
+                  <span className="bg-gray-200 px-2 py-1 rounded font-semibold">
+                    Sopore@123
+                  </span>
+                </li>
+              </ol>
+
+              <div className="bg-yellow-100 border-l-4 border-yellow-500 p-3 mt-4 text-sm">
+                ⚠️ All voters use the <strong>same password</strong> for login.
+                Change password after first login for security.
+              </div>
+
+              <button
+                onClick={() => setShowVoterInstructions(false)}
+                className="w-full mt-4 bg-purple-600 text-white py-2 rounded hover:bg-purple-700"
               >
                 Close
               </button>
