@@ -12,7 +12,7 @@ export default function Home() {
   const [aadharCoped, setaadharCoped] = useState(false);
   const currentUser = localStorage.getItem("logedUser");
   // console.log("currentUser:",currentUser)
-
+  const [isloading, setisloading] = useState(false);
   const [showAdminCredentials, setshowAdminCredentials] = useState(false);
   const [showVoterInstructions, setShowVoterInstructions] = useState(false);
 
@@ -24,6 +24,7 @@ export default function Home() {
     }
 
     try {
+      setisloading(true);
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/user/login`,
         {
@@ -36,10 +37,12 @@ export default function Home() {
         }
       );
       if (!res.ok) {
+        setisloading(false);
         const err = await res.json();
         alert(err.error || "Invalid credentials");
         return;
       }
+      setisloading(false);
       const data = await res.json();
       // console.log("user login:", data);
       login({
@@ -55,6 +58,7 @@ export default function Home() {
         navigate("/user");
       }
     } catch (error) {
+      setisloading(false);
       console.error("Login Error:", error);
       alert("Something went wrong during login");
     }
@@ -89,7 +93,7 @@ export default function Home() {
           onClick={handleLogin}
           className={`w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition cursor-pointer `}
         >
-          Login
+          {isloading ? "Logging in..." : "Login"}
         </button>
 
         <button
