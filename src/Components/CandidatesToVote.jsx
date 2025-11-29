@@ -34,7 +34,7 @@ const { jwtToken } = useAuth();
   // console.log("votedCandidateId:",votedCandidateId);
 
   return (
-    <div>
+    <div className='overflow-y-auto h-[80vh]'>
 
       <div className="bg-yellow-200 text-yellow-800 border border-yellow-500 p-3 rounded mb-4">
         {profile?.isVoted ? "✔️ You have already voted, you can't undo or vote again":"⚠ Once you vote, you cannot undo or change your vote."}

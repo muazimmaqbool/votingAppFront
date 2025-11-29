@@ -133,7 +133,7 @@ const CandidateList = () => {
       </div>
 
       {/* mobile : visible in small screen and hidden in large screens */}
-      <div className="md:hidden space-y-4">
+      <div className="md:hidden space-y-4 overflow-y-auto h-[80vh]">
         {candidates.map((c, index) => (
           <div
             key={index}
