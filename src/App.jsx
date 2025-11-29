@@ -51,7 +51,7 @@ function App() {
         </Routes>
       </BrowserRouter>
 
-      <div className="absolute bottom-10 flex gap-6 text-md text-gray-300">
+      <div className="absolute bottom-0 flex gap-6 text-md text-gray-300">
         <a
           href="https://github.com/muazimmaqbool/votingAppFront"
           target="_blank"

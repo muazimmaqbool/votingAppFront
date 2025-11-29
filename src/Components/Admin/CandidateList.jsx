@@ -11,10 +11,11 @@ const CandidateList = () => {
   const { jwtToken } = useAuth();
   const [candidates, setCandidates] = useState([]);
   const [reload, setreload] = useState(false);
+  const [isloading, setisloading] = useState(false);
   useEffect(() => {
     if (jwtToken) {
       setshowConfirm(false);
-      getAllCandidates(setCandidates, jwtToken);
+      getAllCandidates(setCandidates, jwtToken,setisloading);
     }
   }, [jwtToken, reload]);
   const [isModalOpen, setIsModalOpen] = useState(false);

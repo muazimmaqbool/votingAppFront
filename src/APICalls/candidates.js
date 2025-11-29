@@ -1,6 +1,7 @@
 //used to handle all api calls for /candidate endpoint
-export const getAllCandidates = async (setCandidates, token) => {
+export const getAllCandidates = async (setCandidates, token, setisloading) => {
   try {
+    setisloading(true);
     const res = await fetch(
       `${import.meta.env.VITE_API_BASE_URL}/candidate/all`,
       {
@@ -11,25 +12,29 @@ export const getAllCandidates = async (setCandidates, token) => {
         },
       }
     );
+
     if (!res.ok) {
       const err = await res.json();
       alert(err.error || "Failed to fetch candidates");
       return;
     }
+
     const data = await res.json();
-    // console.log("user login:", data);
     if (data && data.length > 0) {
       setCandidates(data);
     }
   } catch (error) {
     console.log("Failed to fetch candidates", error);
     alert("Failed to fetch candidates");
+  } finally {
+    setisloading(false);
   }
 };
 
-export const addCandidate = async (dataToSave, token,setreload) => {
-    // console.log("dataToSave:",dataToSave)
+
+export const addCandidate = async (dataToSave, token, setreload, setisloading) => {
   try {
+    setisloading(true);
     const res = await fetch(
       `${import.meta.env.VITE_API_BASE_URL}/candidate`,
       {
@@ -38,27 +43,31 @@ export const addCandidate = async (dataToSave, token,setreload) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-         body:JSON.stringify(dataToSave)
+        body: JSON.stringify(dataToSave),
       }
     );
+
     if (!res.ok) {
       const err = await res.json();
       alert(err.error || "Failed to add candidate");
       return;
     }
+
     const data = await res.json();
-     console.log("candidate added:", data);
-    setreload((prev)=>!prev)
-    
+    console.log("candidate added:", data);
+    setreload((prev) => !prev);
   } catch (error) {
-    console.log("Failed toadd candidate", error);
+    console.log("Failed to add candidate", error);
     alert("Failed to add candidate");
+  } finally {
+    setisloading(false);
   }
 };
 
-export const deleteCandidate=async(id,token,setreload)=>{
-    // console.log("id to delete:",id)
-     try {
+
+export const deleteCandidate = async (id, token, setreload, setisloading) => {
+  try {
+    setisloading(true);
     const res = await fetch(
       `${import.meta.env.VITE_API_BASE_URL}/candidate/${id}`,
       {
@@ -69,24 +78,27 @@ export const deleteCandidate=async(id,token,setreload)=>{
         },
       }
     );
+
     if (!res.ok) {
       const err = await res.json();
       alert(err.error || "Failed to delete candidate");
       return;
     }
-    console.log("candidate delete successfully!")
-    setreload((prev)=>!prev)
-    
+
+    console.log("candidate deleted successfully!");
+    setreload((prev) => !prev);
   } catch (error) {
     console.log("Failed delete candidate", error);
     alert("Failed to delete candidate");
+  } finally {
+    setisloading(false);
   }
-}
+};
 
-export const updateCandidate = async (dataToUpdate,id, token,setreload) => {
-    // console.log("id to update:",id)
-    // console.log("dataToUpdate:",dataToUpdate)
+
+export const updateCandidate = async (dataToUpdate, id, token, setreload, setisloading) => {
   try {
+    setisloading(true);
     const res = await fetch(
       `${import.meta.env.VITE_API_BASE_URL}/candidate/${id}`,
       {
@@ -95,27 +107,31 @@ export const updateCandidate = async (dataToUpdate,id, token,setreload) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-         body:JSON.stringify(dataToUpdate)
+        body: JSON.stringify(dataToUpdate),
       }
     );
+
     if (!res.ok) {
       const err = await res.json();
       alert(err.error || "Failed to update candidate");
       return;
     }
+
     const data = await res.json();
     console.log("candidate updated:", data);
-    setreload((prev)=>!prev)
-    
+    setreload((prev) => !prev);
   } catch (error) {
-    console.log("Failed toupdate candidate", error);
+    console.log("Failed to update candidate", error);
     alert("Failed to update candidate");
+  } finally {
+    setisloading(false);
   }
 };
 
-export const voteCandidate = async (id, token,setreload) => {
-   console.log("voting to:",id)
+
+export const voteCandidate = async (id, token, setreload, setisloading) => {
   try {
+    setisloading(true);
     const res = await fetch(
       `${import.meta.env.VITE_API_BASE_URL}/candidate/vote/${id}`,
       {
@@ -126,26 +142,30 @@ export const voteCandidate = async (id, token,setreload) => {
         },
       }
     );
+
     if (!res.ok) {
       const err = await res.json();
-      setreload((prev)=>!prev)
-      alert(err.message || "Failed to vote the candidate");
+      alert(err.message || "Failed to vote candidate");
       return;
     }
+
     const data = await res.json();
-    console.log("voted:",data);
-    alert(data?.message)
-    setreload((prev)=>!prev)
-    
+    console.log("voted:", data);
+    alert(data?.message);
+    setreload((prev) => !prev);
   } catch (error) {
     console.log("Failed to vote the candidate", error);
     alert("Failed to vote the candidate");
+  } finally {
+    setisloading(false);
   }
 };
 
+
 //getting votecount
-export const getVoteCount = async (setvotCount, token) => {
+export const getVoteCount = async (setvotCount, token, setisloading) => {
   try {
+    setisloading(true);
     const res = await fetch(
       `${import.meta.env.VITE_API_BASE_URL}/candidate/vote/count`,
       {
@@ -156,16 +176,19 @@ export const getVoteCount = async (setvotCount, token) => {
         },
       }
     );
+
     if (!res.ok) {
       const err = await res.json();
       alert(err.error || "Failed to fetch vote count");
       return;
     }
+
     const data = await res.json();
-   // console.log("vote count:", data);
-    setvotCount(data)
+    setvotCount(data);
   } catch (error) {
     console.log("Failed to fetch vote count", error);
     alert("Failed to fetch vote count");
+  } finally {
+    setisloading(false);
   }
 };
