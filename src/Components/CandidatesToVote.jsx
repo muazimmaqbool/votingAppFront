@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useAuth } from '../Context/AuthContext';
 import { getAllCandidates, voteCandidate } from '../APICalls/candidates';
 import { getProfile } from '../APICalls/userApi';
+import Loader from './Loader';
 
 const CandidatesToVote = () => {
 const { jwtToken } = useAuth();
@@ -11,11 +12,12 @@ const { jwtToken } = useAuth();
   const [showConfirm, setShowConfirm] = useState(false);
   const [votedCandidateId, setVotedCandidateId] = useState(null);
   const [reload, setreload] = useState(false);
+  const [isloading, setisloading] = useState(false);
   useEffect(() => {
     if (jwtToken) {
       setShowConfirm(false);
-      getProfile(jwtToken, setprofile);
-      getAllCandidates(setCandidates, jwtToken);
+      getProfile(jwtToken, setprofile,setisloading);
+      getAllCandidates(setCandidates, jwtToken,setisloading);
     }
   }, [jwtToken, reload]);
 // console.log("candidates:",candidates);
@@ -29,7 +31,7 @@ const { jwtToken } = useAuth();
   };
 // console.log("selectedCandidate:",selectedCandidate);
   const confirmVote = () => {
-   voteCandidate(selectedCandidate?._id,jwtToken,setreload)
+   voteCandidate(selectedCandidate?._id,jwtToken,setreload,setisloading)
   };
   // console.log("votedCandidateId:",votedCandidateId);
 
@@ -46,7 +48,7 @@ const { jwtToken } = useAuth();
     -> lg:grid-cols-3 : On large screens → 3 columns
     -> Responsively displays 1, 2, or 3 candidates per row i.e one column on smaller
     */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+     {isloading?<Loader/>: <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         {candidates.map((c,index)=> (
           <div
             key={index}
@@ -70,7 +72,7 @@ const { jwtToken } = useAuth();
             )}
           </div>
         ))}
-      </div>
+      </div>}
 
       {showConfirm && (
         <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-20">
