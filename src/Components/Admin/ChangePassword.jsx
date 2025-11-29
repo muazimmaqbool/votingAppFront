@@ -9,6 +9,7 @@ const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isloading, setisloading] = useState(false);
   const handleLogout = () => {
     logout();
     navigate("/");
@@ -19,7 +20,7 @@ const ChangePassword = () => {
       alert("New passwords do not match!");
       return;
     }
-    updatePassword(oldPassword, newPassword, jwtToken, handleLogout);
+    updatePassword(oldPassword, newPassword, jwtToken, handleLogout,setisloading);
   };
 
   return (
@@ -60,7 +61,7 @@ const ChangePassword = () => {
           type="submit"
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
-          Update Password
+         {isloading ? "Updating..." : "Update Password"}
         </button>
       </form>
     </div>

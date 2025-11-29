@@ -6,6 +6,7 @@ import {
   updateCandidate,
 } from "../../APICalls/candidates";
 import { useAuth } from "../../Context/AuthContext";
+import Loader from "../Loader";
 
 const CandidateList = () => {
   const { jwtToken } = useAuth();
@@ -15,7 +16,7 @@ const CandidateList = () => {
   useEffect(() => {
     if (jwtToken) {
       setshowConfirm(false);
-      getAllCandidates(setCandidates, jwtToken,setisloading);
+      getAllCandidates(setCandidates, jwtToken, setisloading);
     }
   }, [jwtToken, reload]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -48,7 +49,7 @@ const CandidateList = () => {
         age: newCandidate.age,
         party: newCandidate.party,
       };
-     updateCandidate(updateEntry, editID, jwtToken, setreload);
+      updateCandidate(updateEntry, editID, jwtToken, setreload,setisloading);
     } else {
       //adding new candidate
       const newEntry = {
@@ -56,7 +57,7 @@ const CandidateList = () => {
         age: newCandidate.age,
         party: newCandidate.party,
       };
-      addCandidate(newEntry, jwtToken, setreload);
+      addCandidate(newEntry, jwtToken, setreload,setisloading);
     }
 
     setNewCandidate({ name: "", party: "", votes: "" });
@@ -89,31 +90,78 @@ const CandidateList = () => {
         + Add Candidate
       </button>
 
-      {/* for mobile screens it will be hidden and visible in large screens only */}
-      <div className="overflow-x-auto hidden md:block">
-        <table className="w-full border">
-          {candidates && candidates?.length > 0 && (
-            <thead className="bg-gray-200">
-              <tr>
-                <th className="p-2 border">Name</th>
-                <th className="p-2 border">Age</th>
-                <th className="p-2 border">Party</th>
-                {/* <th className="p-2 border">Votes</th> */}
-                <th className="p-2 border">Actions</th>
-              </tr>
-            </thead>
-          )}
-          <tbody>
+      {isloading ? (
+        <Loader/>
+      ) : (
+        <>
+          {/* for mobile screens it will be hidden and visible in large screens only */}
+          <div className="overflow-x-auto hidden md:block">
+            <table className="w-full border">
+              {candidates && candidates?.length > 0 && (
+                <thead className="bg-gray-200">
+                  <tr>
+                    <th className="p-2 border">Name</th>
+                    <th className="p-2 border">Age</th>
+                    <th className="p-2 border">Party</th>
+                    {/* <th className="p-2 border">Votes</th> */}
+                    <th className="p-2 border">Actions</th>
+                  </tr>
+                </thead>
+              )}
+              <tbody>
+                {candidates.map((c, index) => (
+                  <tr key={index} className="text-center hover:bg-gray-50">
+                    <td className="p-2 border">{c.name}</td>
+                    <td className="p-2 border">{c.age}</td>
+                    <td className="p-2 border">{c.party}</td>
+                    {/* <td className="p-2 border">{c.voteCount}</td> */}
+                    <td className="p-2 border space-x-2">
+                      <button
+                        className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
+                        onClick={() => handleEdit(c)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => {
+                          setshowConfirm(true);
+                          setcandidateToDelete(c);
+                        }}
+                        className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* mobile : visible in small screen and hidden in large screens */}
+          <div className="md:hidden space-y-4 overflow-y-auto h-[80vh]">
             {candidates.map((c, index) => (
-              <tr key={index} className="text-center hover:bg-gray-50">
-                <td className="p-2 border">{c.name}</td>
-                <td className="p-2 border">{c.age}</td>
-                <td className="p-2 border">{c.party}</td>
-                {/* <td className="p-2 border">{c.voteCount}</td> */}
-                <td className="p-2 border space-x-2">
+              <div
+                key={index}
+                className="bg-white shadow-md rounded-lg p-4 border border-gray-200"
+              >
+                <p>
+                  <span className="font-semibold">Name:</span> {c.name}
+                </p>
+                <p>
+                  <span className="font-semibold">Age:</span> {c.age}
+                </p>
+                <p>
+                  <span className="font-semibold">Party:</span> {c.party}
+                </p>
+                <p>
+                  <span className="font-semibold">Votes:</span> {c.voteCount}
+                </p>
+
+                <div className="mt-3 flex gap-2">
                   <button
-                    className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
                     onClick={() => handleEdit(c)}
+                    className="flex-1 bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
                   >
                     Edit
                   </button>
@@ -122,64 +170,23 @@ const CandidateList = () => {
                       setshowConfirm(true);
                       setcandidateToDelete(c);
                     }}
-                    className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700"
+                    className="flex-1 bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
                   >
                     Delete
                   </button>
-                </td>
-              </tr>
+                </div>
+              </div>
             ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* mobile : visible in small screen and hidden in large screens */}
-      <div className="md:hidden space-y-4 overflow-y-auto h-[80vh]">
-        {candidates.map((c, index) => (
-          <div
-            key={index}
-            className="bg-white shadow-md rounded-lg p-4 border border-gray-200"
-          >
-            <p>
-              <span className="font-semibold">Name:</span> {c.name}
-            </p>
-            <p>
-              <span className="font-semibold">Age:</span> {c.age}
-            </p>
-            <p>
-              <span className="font-semibold">Party:</span> {c.party}
-            </p>
-            <p>
-              <span className="font-semibold">Votes:</span> {c.voteCount}
-            </p>
-
-            <div className="mt-3 flex gap-2">
-              <button
-                onClick={() => handleEdit(c)}
-                className="flex-1 bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => {
-                  setshowConfirm(true);
-                  setcandidateToDelete(c);
-                }}
-                className="flex-1 bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-              >
-                Delete
-              </button>
-            </div>
           </div>
-        ))}
-      </div>
 
-      {candidates.length === 0 && (
-        <div className="flex items-center justify-center mt-10">
-          <p className="text-gray-400 font-semibold text-2xl">
-            No Data Available
-          </p>
-        </div>
+          {candidates.length === 0 && (
+            <div className="flex items-center justify-center mt-10">
+              <p className="text-gray-400 font-semibold text-2xl">
+                No Data Available
+              </p>
+            </div>
+          )}
+        </>
       )}
 
       {/* Modal to add new candidate */}
@@ -272,7 +279,7 @@ const CandidateList = () => {
               </button>
               <button
                 onClick={() =>
-                  deleteCandidate(candidateToDelete?._id, jwtToken, setreload)
+                  deleteCandidate(candidateToDelete?._id, jwtToken, setreload,setisloading)
                 }
                 className="px-4 py-2 bg-green-600 text-white rounded"
               >

@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../Context/AuthContext";
 import { getProfile, updateProfile } from "../../APICalls/userApi";
+import Loader from "../Loader";
 
 export default function Profile() {
   const { jwtToken } = useAuth();
   const [profile, setprofile] = useState();
   const [reload, setreload] = useState(false);
+    const [isloading, setisloading] = useState(false);
   useEffect(() => {
     if (jwtToken) {
       setIsEditing(false)
-      getProfile(jwtToken, setprofile);
+      getProfile(jwtToken, setprofile,setisloading);
     }
   }, [jwtToken,reload]);
 
@@ -36,14 +38,14 @@ export default function Profile() {
   // console.log("editData:",editData)
   const handleSave = (e) => {
     e.preventDefault();
-    updateProfile(editData,profile?._id,jwtToken,setreload)
+    updateProfile(editData,profile?._id,jwtToken,setreload,setisloading)
   };
 
   return (
     <div>
       <h2 className="text-2xl font-bold mb-4">My Profile</h2>
 
-      <div className="bg-white shadow p-6 rounded-lg space-y-3">
+      {isloading?<Loader/>:<div className="bg-white shadow p-6 rounded-lg space-y-3">
         <p>
           <strong>Name:</strong> {profile?.name}
         </p>
@@ -72,7 +74,7 @@ export default function Profile() {
         >
           Edit Profile
         </button>
-      </div>
+      </div>}
 
       {isEditing && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-20 ">
