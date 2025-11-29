@@ -50,26 +50,6 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-
-      <div className="absolute bottom-0 flex gap-6 text-md text-gray-300">
-        <a
-          href="https://github.com/muazimmaqbool/votingAppFront"
-          target="_blank"
-          rel="noreferrer"
-          className="hover:text-blue-400 underline"
-        >
-          Frontend GitHub Repo
-        </a>
-
-        <a
-          href="https://github.com/muazimmaqbool/votingApp"
-          target="_blank"
-          rel="noreferrer"
-          className="hover:text-green-400 underline"
-        >
-          Backend GitHub Repo
-        </a>
-      </div>
     </div>
   );
 }

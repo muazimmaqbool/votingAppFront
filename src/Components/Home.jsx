@@ -116,6 +116,26 @@ export default function Home() {
           Get Voter Credentials
         </button>
 
+        <div className="absolute bottom-10 flex gap-6 text-md text-gray-300">
+          <a
+            href="https://github.com/muazimmaqbool/votingAppFront"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:text-blue-400 underline"
+          >
+            Frontend GitHub Repo
+          </a>
+
+          <a
+            href="https://github.com/muazimmaqbool/votingApp"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:text-green-400 underline"
+          >
+            Backend GitHub Repo
+          </a>
+        </div>
+
         {showAdminCredentials && (
           <div
             className="fixed inset-0 bg-black/50 flex items-center justify-center "
