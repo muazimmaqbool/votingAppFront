@@ -141,7 +141,7 @@ export default function Home() {
                   <div
                     className="cursor-pointer"
                     onClick={() => {
-                      navigator.clipboard.writeText("111111222222");
+                      navigator.clipboard.writeText("123456789012");
                       //alert("Aadhar Number Copied!");
                       setaadharCoped(true);
                     }}
