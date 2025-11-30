@@ -31,6 +31,7 @@ const { jwtToken } = useAuth();
   };
 // console.log("selectedCandidate:",selectedCandidate);
   const confirmVote = () => {
+    setShowConfirm(false);
    voteCandidate(selectedCandidate?._id,jwtToken,setreload,setisloading)
   };
   // console.log("votedCandidateId:",votedCandidateId);
