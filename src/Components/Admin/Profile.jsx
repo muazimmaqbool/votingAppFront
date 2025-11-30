@@ -45,7 +45,7 @@ export default function Profile() {
     <div>
       <h2 className="text-2xl font-bold mb-4">My Profile</h2>
 
-      {isloading?<Loader/>:<div className="bg-white shadow p-6 rounded-lg space-y-3">
+     <div className="bg-white shadow p-6 rounded-lg space-y-3">
         <p>
           <strong>Name:</strong> {profile?.name}
         </p>
@@ -74,7 +74,7 @@ export default function Profile() {
         >
           Edit Profile
         </button>
-      </div>}
+      </div>
 
       {isEditing && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-20 ">
@@ -159,7 +159,7 @@ export default function Profile() {
                   type="submit"
                   className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer"
                 >
-                  Save Changes
+                  {isloading ? 'Saving...' : 'Save Changes'}
                 </button>
               </div>
             </form>
