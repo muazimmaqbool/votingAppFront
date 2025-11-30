@@ -59,6 +59,7 @@ const AdminDashboard = () => {
                 isActive ? "bg-blue-900" : ""
               }`
             }
+            onClick={()=>setIsSidebarOpen(false)}
           >
             Candidates
           </NavLink>
@@ -79,6 +80,7 @@ const AdminDashboard = () => {
                 isActive ? "bg-blue-900" : ""
               }`
             }
+            onClick={()=>setIsSidebarOpen(false)}
           >
             All Voters
           </NavLink>
@@ -89,6 +91,7 @@ const AdminDashboard = () => {
                 isActive ? "bg-blue-900" : ""
               }`
             }
+            onClick={()=>setIsSidebarOpen(false)}
           >
             My Profile
           </NavLink>
@@ -99,6 +102,7 @@ const AdminDashboard = () => {
                 isActive ? "bg-blue-900" : ""
               }`
             }
+            onClick={()=>setIsSidebarOpen(false)}
           >
             Change Password
           </NavLink>
