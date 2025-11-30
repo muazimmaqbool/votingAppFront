@@ -13,6 +13,7 @@ const CandidateList = () => {
   const [candidates, setCandidates] = useState([]);
   const [reload, setreload] = useState(false);
   const [isloading, setisloading] = useState(false);
+  const [deleteloader, setdeleteloader] = useState(false);
   useEffect(() => {
     if (jwtToken) {
       setshowConfirm(false);
@@ -279,11 +280,11 @@ const CandidateList = () => {
               </button>
               <button
                 onClick={() =>
-                  deleteCandidate(candidateToDelete?._id, jwtToken, setreload,setisloading)
+                  deleteCandidate(candidateToDelete?._id, jwtToken, setreload,setdeleteloader)
                 }
                 className="px-4 py-2 bg-green-600 text-white rounded"
               >
-                Delete
+                {deleteloader ? "Deleting..." : "Delete"}
               </button>
             </div>
           </div>
