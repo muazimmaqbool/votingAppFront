@@ -72,7 +72,7 @@ const AllVoters = () => {
                 </p>
                 <p className="mt-2">
                   <span className="font-semibold">Voted:</span>{" "}
-                  {v.hasVoted ? (
+                  {v.isVoted ? (
                     <span className="text-green-600 font-semibold">Yes</span>
                   ) : (
                     <span className="text-red-600 font-semibold">No</span>
