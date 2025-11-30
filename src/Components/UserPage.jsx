@@ -54,6 +54,7 @@ const UserPage = () => {
                     isActive ? "bg-blue-900" : ""
                   }`
                 }
+                onClick={()=>setIsSidebarOpen(false)}
               >
                 Candidates
               </NavLink>
@@ -64,6 +65,7 @@ const UserPage = () => {
                     isActive ? "bg-blue-900" : ""
                   }`
                 }
+                 onClick={()=>setIsSidebarOpen(false)}
               >
                 My Profile
               </NavLink>
@@ -74,6 +76,7 @@ const UserPage = () => {
                     isActive ? "bg-blue-900" : ""
                   }`
                 }
+                 onClick={()=>setIsSidebarOpen(false)}
               >
                 Change Password
               </NavLink>
