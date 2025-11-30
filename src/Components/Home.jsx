@@ -90,6 +90,7 @@ export default function Home() {
 
         {/* Login Button */}
         <button
+        disabled={isloading}
           onClick={handleLogin}
           className={`w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition cursor-pointer `}
         >
@@ -97,12 +98,14 @@ export default function Home() {
         </button>
 
         <button
+          disabled={isloading}
           onClick={() => navigate("/register")}
           className={`w-full mt-3 bg-gray-200 text-gray-900 py-2 rounded hover:bg-gray-300 transition cursor-pointer `}
         >
           Register New Voter
         </button>
         <button
+          disabled={isloading}
           onClick={() => setshowAdminCredentials(true)}
           className={`w-full mt-4 bg-yellow-500 text-white py-1 rounded hover:bg-yellow-600 transition cursor-pointer 
             `}
@@ -110,6 +113,7 @@ export default function Home() {
           Show Admin Credentials
         </button>
         <button
+          disabled={isloading}
           onClick={() => setShowVoterInstructions(true)}
           className="w-full mt-3 bg-purple-600 text-white py-1 rounded hover:bg-purple-700 transition cursor-pointer"
         >
