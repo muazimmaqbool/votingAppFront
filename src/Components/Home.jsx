@@ -66,9 +66,23 @@ export default function Home() {
 
   return (
     <div className="flex h-screem items-center justify-center">
-      <div className="bg-white shadow-lg rounded-lg p-8 w-96">
-        <div className="text-2xl font-bold text-center mb-6">Voter Login</div>
+      <div className="bg-white shadow-lg rounded-lg p-6 w-96">
+        <div className="text-2xl font-bold text-center mb-2">Login</div>
 
+        {isloading && (
+          <div className="mb-4 p-3 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 text-sm text-center">
+            <p className="font-semibold animate-pulse">
+              Waking up the server… 🚀
+            </p>
+            <p className="mt-1">
+              Our free server goes to sleep when it’s not used.
+              <br />
+              The first request may take a few seconds.
+              <br/>
+              Thanks for your patience 💙
+            </p>
+          </div>
+        )}
         <label className="block mb-2 font-medium">Aadhar Card Number</label>
         <input
           type="text"
@@ -90,7 +104,7 @@ export default function Home() {
 
         {/* Login Button */}
         <button
-        disabled={isloading}
+          disabled={isloading}
           onClick={handleLogin}
           className={`w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition cursor-pointer `}
         >
